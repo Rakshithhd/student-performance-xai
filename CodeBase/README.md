@@ -30,3 +30,4 @@ They have usually optimized for speed, not performance.
 But we optimized the code in trad off the speed and want to increase performance.
 We systematically optimized the model using hyperparameter tuning and decision-threshold calibration to improve generalization, F1-score, and reliability.
 Default hyperparameters provide a baseline but are rarely optimal for domain-specific datasets.
+GridSearchCV is a powerful tool in scikit-learn that allows for exhaustive search over specified parameter values for an estimator. It is particularly useful for hyperparameter tuning, where the goal is to find the best combination of parameters that result in the highest model performance
