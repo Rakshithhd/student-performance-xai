@@ -24,3 +24,9 @@ We converted the final grade into a binary pass/fail outcome to align the model 
 Attendance ratio provides a normalized representation of absenteeism that improves model robustness.
 These transformations convert raw academic records into meaningful, interpretable variables that enhance prediction accuracy and align the model with real educational decision-making.
 
+## Why we tuning the hyperparameters?
+Earlier code used default XGBoost settings.
+They have usually optimized for speed, not performance.
+But we optimized the code in trad off the speed and want to increase performance.
+We systematically optimized the model using hyperparameter tuning and decision-threshold calibration to improve generalization, F1-score, and reliability.
+Default hyperparameters provide a baseline but are rarely optimal for domain-specific datasets.
