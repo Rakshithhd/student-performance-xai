@@ -1,0 +1,1557 @@
+\documentclass[9pt]{article}
+
+    \usepackage[breakable]{tcolorbox}
+    \usepackage{parskip} % Stop auto-indenting (to mimic markdown behaviour)
+    
+
+    % Basic figure setup, for now with no caption control since it's done
+    % automatically by Pandoc (which extracts ![](path) syntax from Markdown).
+    \usepackage{graphicx}
+    % Keep aspect ratio if custom image width or height is specified
+    \setkeys{Gin}{keepaspectratio}
+    % Maintain compatibility with old templates. Remove in nbconvert 6.0
+    \let\Oldincludegraphics\includegraphics
+    % Ensure that by default, figures have no caption (until we provide a
+    % proper Figure object with a Caption API and a way to capture that
+    % in the conversion process - todo).
+    \usepackage{caption}
+    \DeclareCaptionFormat{nocaption}{}
+    \captionsetup{format=nocaption,aboveskip=0pt,belowskip=0pt}
+
+    \usepackage{float}
+    \floatplacement{figure}{H} % forces figures to be placed at the correct location
+    \usepackage{xcolor} % Allow colors to be defined
+    \usepackage{enumerate} % Needed for markdown enumerations to work
+    \usepackage{geometry} % Used to adjust the document margins
+    \usepackage{amsmath} % Equations
+    \usepackage{amssymb} % Equations
+    \usepackage{textcomp} % defines textquotesingle
+    % Hack from http://tex.stackexchange.com/a/47451/13684:
+    \AtBeginDocument{%
+        \def\PYZsq{\textquotesingle}% Upright quotes in Pygmentized code
+    }
+    \usepackage{upquote} % Upright quotes for verbatim code
+    \usepackage{eurosym} % defines \euro
+
+    \usepackage{iftex}
+    \ifPDFTeX
+        \usepackage[T1]{fontenc}
+        \IfFileExists{alphabeta.sty}{
+              \usepackage{alphabeta}
+          }{
+              \usepackage[mathletters]{ucs}
+              \usepackage[utf8x]{inputenc}
+          }
+    \else
+        \usepackage{fontspec}
+        \usepackage{unicode-math}
+    \fi
+
+    \usepackage{fancyvrb} % verbatim replacement that allows latex
+    \usepackage{grffile} % extends the file name processing of package graphics
+                         % to support a larger range
+    \makeatletter % fix for old versions of grffile with XeLaTeX
+    \@ifpackagelater{grffile}{2019/11/01}
+    {
+      % Do nothing on new versions
+    }
+    {
+      \def\Gread@@xetex#1{%
+        \IfFileExists{"\Gin@base".bb}%
+        {\Gread@eps{\Gin@base.bb}}%
+        {\Gread@@xetex@aux#1}%
+      }
+    }
+    \makeatother
+    \usepackage[Export]{adjustbox} % Used to constrain images to a maximum size
+    \adjustboxset{max size={0.9\linewidth}{0.9\paperheight}}
+
+    % The hyperref package gives us a pdf with properly built
+    % internal navigation ('pdf bookmarks' for the table of contents,
+    % internal cross-reference links, web links for URLs, etc.)
+    \usepackage{hyperref}
+    % The default LaTeX title has an obnoxious amount of whitespace. By default,
+    % titling removes some of it. It also provides customization options.
+    \usepackage{titling}
+    \usepackage{longtable} % longtable support required by pandoc >1.10
+    \usepackage{booktabs}  % table support for pandoc > 1.12.2
+    \usepackage{array}     % table support for pandoc >= 2.11.3
+    \usepackage{calc}      % table minipage width calculation for pandoc >= 2.11.1
+    \usepackage[inline]{enumitem} % IRkernel/repr support (it uses the enumerate* environment)
+    \usepackage[normalem]{ulem} % ulem is needed to support strikethroughs (\sout)
+                                % normalem makes italics be italics, not underlines
+    \usepackage{soul}      % strikethrough (\st) support for pandoc >= 3.0.0
+    \usepackage{mathrsfs}
+    
+
+    
+    % Colors for the hyperref package
+    \definecolor{urlcolor}{rgb}{0,.145,.698}
+    \definecolor{linkcolor}{rgb}{.71,0.21,0.01}
+    \definecolor{citecolor}{rgb}{.12,.54,.11}
+
+    % ANSI colors
+    \definecolor{ansi-black}{HTML}{3E424D}
+    \definecolor{ansi-black-intense}{HTML}{282C36}
+    \definecolor{ansi-red}{HTML}{E75C58}
+    \definecolor{ansi-red-intense}{HTML}{B22B31}
+    \definecolor{ansi-green}{HTML}{00A250}
+    \definecolor{ansi-green-intense}{HTML}{007427}
+    \definecolor{ansi-yellow}{HTML}{DDB62B}
+    \definecolor{ansi-yellow-intense}{HTML}{B27D12}
+    \definecolor{ansi-blue}{HTML}{208FFB}
+    \definecolor{ansi-blue-intense}{HTML}{0065CA}
+    \definecolor{ansi-magenta}{HTML}{D160C4}
+    \definecolor{ansi-magenta-intense}{HTML}{A03196}
+    \definecolor{ansi-cyan}{HTML}{60C6C8}
+    \definecolor{ansi-cyan-intense}{HTML}{258F8F}
+    \definecolor{ansi-white}{HTML}{C5C1B4}
+    \definecolor{ansi-white-intense}{HTML}{A1A6B2}
+    \definecolor{ansi-default-inverse-fg}{HTML}{FFFFFF}
+    \definecolor{ansi-default-inverse-bg}{HTML}{000000}
+
+    % common color for the border for error outputs.
+    \definecolor{outerrorbackground}{HTML}{FFDFDF}
+
+    % commands and environments needed by pandoc snippets
+    % extracted from the output of `pandoc -s`
+    \providecommand{\tightlist}{%
+      \setlength{\itemsep}{0pt}\setlength{\parskip}{0pt}}
+    \DefineVerbatimEnvironment{Highlighting}{Verbatim}{commandchars=\\\{\}}
+    % Add ',fontsize=\small' for more characters per line
+    \newenvironment{Shaded}{}{}
+    \newcommand{\KeywordTok}[1]{\textcolor[rgb]{0.00,0.44,0.13}{\textbf{{#1}}}}
+    \newcommand{\DataTypeTok}[1]{\textcolor[rgb]{0.56,0.13,0.00}{{#1}}}
+    \newcommand{\DecValTok}[1]{\textcolor[rgb]{0.25,0.63,0.44}{{#1}}}
+    \newcommand{\BaseNTok}[1]{\textcolor[rgb]{0.25,0.63,0.44}{{#1}}}
+    \newcommand{\FloatTok}[1]{\textcolor[rgb]{0.25,0.63,0.44}{{#1}}}
+    \newcommand{\CharTok}[1]{\textcolor[rgb]{0.25,0.44,0.63}{{#1}}}
+    \newcommand{\StringTok}[1]{\textcolor[rgb]{0.25,0.44,0.63}{{#1}}}
+    \newcommand{\CommentTok}[1]{\textcolor[rgb]{0.38,0.63,0.69}{\textit{{#1}}}}
+    \newcommand{\OtherTok}[1]{\textcolor[rgb]{0.00,0.44,0.13}{{#1}}}
+    \newcommand{\AlertTok}[1]{\textcolor[rgb]{1.00,0.00,0.00}{\textbf{{#1}}}}
+    \newcommand{\FunctionTok}[1]{\textcolor[rgb]{0.02,0.16,0.49}{{#1}}}
+    \newcommand{\RegionMarkerTok}[1]{{#1}}
+    \newcommand{\ErrorTok}[1]{\textcolor[rgb]{1.00,0.00,0.00}{\textbf{{#1}}}}
+    \newcommand{\NormalTok}[1]{{#1}}
+
+    % Additional commands for more recent versions of Pandoc
+    \newcommand{\ConstantTok}[1]{\textcolor[rgb]{0.53,0.00,0.00}{{#1}}}
+    \newcommand{\SpecialCharTok}[1]{\textcolor[rgb]{0.25,0.44,0.63}{{#1}}}
+    \newcommand{\VerbatimStringTok}[1]{\textcolor[rgb]{0.25,0.44,0.63}{{#1}}}
+    \newcommand{\SpecialStringTok}[1]{\textcolor[rgb]{0.73,0.40,0.53}{{#1}}}
+    \newcommand{\ImportTok}[1]{{#1}}
+    \newcommand{\DocumentationTok}[1]{\textcolor[rgb]{0.73,0.13,0.13}{\textit{{#1}}}}
+    \newcommand{\AnnotationTok}[1]{\textcolor[rgb]{0.38,0.63,0.69}{\textbf{\textit{{#1}}}}}
+    \newcommand{\CommentVarTok}[1]{\textcolor[rgb]{0.38,0.63,0.69}{\textbf{\textit{{#1}}}}}
+    \newcommand{\VariableTok}[1]{\textcolor[rgb]{0.10,0.09,0.49}{{#1}}}
+    \newcommand{\ControlFlowTok}[1]{\textcolor[rgb]{0.00,0.44,0.13}{\textbf{{#1}}}}
+    \newcommand{\OperatorTok}[1]{\textcolor[rgb]{0.40,0.40,0.40}{{#1}}}
+    \newcommand{\BuiltInTok}[1]{{#1}}
+    \newcommand{\ExtensionTok}[1]{{#1}}
+    \newcommand{\PreprocessorTok}[1]{\textcolor[rgb]{0.74,0.48,0.00}{{#1}}}
+    \newcommand{\AttributeTok}[1]{\textcolor[rgb]{0.49,0.56,0.16}{{#1}}}
+    \newcommand{\InformationTok}[1]{\textcolor[rgb]{0.38,0.63,0.69}{\textbf{\textit{{#1}}}}}
+    \newcommand{\WarningTok}[1]{\textcolor[rgb]{0.38,0.63,0.69}{\textbf{\textit{{#1}}}}}
+    \makeatletter
+    \newsavebox\pandoc@box
+    \newcommand*\pandocbounded[1]{%
+      \sbox\pandoc@box{#1}%
+      % scaling factors for width and height
+      \Gscale@div\@tempa\textheight{\dimexpr\ht\pandoc@box+\dp\pandoc@box\relax}%
+      \Gscale@div\@tempb\linewidth{\wd\pandoc@box}%
+      % select the smaller of both
+      \ifdim\@tempb\p@<\@tempa\p@
+        \let\@tempa\@tempb
+      \fi
+      % scaling accordingly (\@tempa < 1)
+      \ifdim\@tempa\p@<\p@
+        \scalebox{\@tempa}{\usebox\pandoc@box}%
+      % scaling not needed, use as it is
+      \else
+        \usebox{\pandoc@box}%
+      \fi
+    }
+    \makeatother
+
+    % Define a nice break command that doesn't care if a line doesn't already
+    % exist.
+    \def\br{\hspace*{\fill} \\* }
+    % Math Jax compatibility definitions
+    \def\gt{>}
+    \def\lt{<}
+    \let\Oldtex\TeX
+    \let\Oldlatex\LaTeX
+    \renewcommand{\TeX}{\textrm{\Oldtex}}
+    \renewcommand{\LaTeX}{\textrm{\Oldlatex}}
+    % Document parameters
+    % Document title
+    \title{SPP-Trial-3-Jupyter}
+    
+    
+    
+    
+    
+    
+    
+% Pygments definitions
+\makeatletter
+\def\PY@reset{\let\PY@it=\relax \let\PY@bf=\relax%
+    \let\PY@ul=\relax \let\PY@tc=\relax%
+    \let\PY@bc=\relax \let\PY@ff=\relax}
+\def\PY@tok#1{\csname PY@tok@#1\endcsname}
+\def\PY@toks#1+{\ifx\relax#1\empty\else%
+    \PY@tok{#1}\expandafter\PY@toks\fi}
+\def\PY@do#1{\PY@bc{\PY@tc{\PY@ul{%
+    \PY@it{\PY@bf{\PY@ff{#1}}}}}}}
+\def\PY#1#2{\PY@reset\PY@toks#1+\relax+\PY@do{#2}}
+
+\@namedef{PY@tok@w}{\def\PY@tc##1{\textcolor[rgb]{0.73,0.73,0.73}{##1}}}
+\@namedef{PY@tok@c}{\let\PY@it=\textit\def\PY@tc##1{\textcolor[rgb]{0.24,0.48,0.48}{##1}}}
+\@namedef{PY@tok@cp}{\def\PY@tc##1{\textcolor[rgb]{0.61,0.40,0.00}{##1}}}
+\@namedef{PY@tok@k}{\let\PY@bf=\textbf\def\PY@tc##1{\textcolor[rgb]{0.00,0.50,0.00}{##1}}}
+\@namedef{PY@tok@kp}{\def\PY@tc##1{\textcolor[rgb]{0.00,0.50,0.00}{##1}}}
+\@namedef{PY@tok@kt}{\def\PY@tc##1{\textcolor[rgb]{0.69,0.00,0.25}{##1}}}
+\@namedef{PY@tok@o}{\def\PY@tc##1{\textcolor[rgb]{0.40,0.40,0.40}{##1}}}
+\@namedef{PY@tok@ow}{\let\PY@bf=\textbf\def\PY@tc##1{\textcolor[rgb]{0.67,0.13,1.00}{##1}}}
+\@namedef{PY@tok@nb}{\def\PY@tc##1{\textcolor[rgb]{0.00,0.50,0.00}{##1}}}
+\@namedef{PY@tok@nf}{\def\PY@tc##1{\textcolor[rgb]{0.00,0.00,1.00}{##1}}}
+\@namedef{PY@tok@nc}{\let\PY@bf=\textbf\def\PY@tc##1{\textcolor[rgb]{0.00,0.00,1.00}{##1}}}
+\@namedef{PY@tok@nn}{\let\PY@bf=\textbf\def\PY@tc##1{\textcolor[rgb]{0.00,0.00,1.00}{##1}}}
+\@namedef{PY@tok@ne}{\let\PY@bf=\textbf\def\PY@tc##1{\textcolor[rgb]{0.80,0.25,0.22}{##1}}}
+\@namedef{PY@tok@nv}{\def\PY@tc##1{\textcolor[rgb]{0.10,0.09,0.49}{##1}}}
+\@namedef{PY@tok@no}{\def\PY@tc##1{\textcolor[rgb]{0.53,0.00,0.00}{##1}}}
+\@namedef{PY@tok@nl}{\def\PY@tc##1{\textcolor[rgb]{0.46,0.46,0.00}{##1}}}
+\@namedef{PY@tok@ni}{\let\PY@bf=\textbf\def\PY@tc##1{\textcolor[rgb]{0.44,0.44,0.44}{##1}}}
+\@namedef{PY@tok@na}{\def\PY@tc##1{\textcolor[rgb]{0.41,0.47,0.13}{##1}}}
+\@namedef{PY@tok@nt}{\let\PY@bf=\textbf\def\PY@tc##1{\textcolor[rgb]{0.00,0.50,0.00}{##1}}}
+\@namedef{PY@tok@nd}{\def\PY@tc##1{\textcolor[rgb]{0.67,0.13,1.00}{##1}}}
+\@namedef{PY@tok@s}{\def\PY@tc##1{\textcolor[rgb]{0.73,0.13,0.13}{##1}}}
+\@namedef{PY@tok@sd}{\let\PY@it=\textit\def\PY@tc##1{\textcolor[rgb]{0.73,0.13,0.13}{##1}}}
+\@namedef{PY@tok@si}{\let\PY@bf=\textbf\def\PY@tc##1{\textcolor[rgb]{0.64,0.35,0.47}{##1}}}
+\@namedef{PY@tok@se}{\let\PY@bf=\textbf\def\PY@tc##1{\textcolor[rgb]{0.67,0.36,0.12}{##1}}}
+\@namedef{PY@tok@sr}{\def\PY@tc##1{\textcolor[rgb]{0.64,0.35,0.47}{##1}}}
+\@namedef{PY@tok@ss}{\def\PY@tc##1{\textcolor[rgb]{0.10,0.09,0.49}{##1}}}
+\@namedef{PY@tok@sx}{\def\PY@tc##1{\textcolor[rgb]{0.00,0.50,0.00}{##1}}}
+\@namedef{PY@tok@m}{\def\PY@tc##1{\textcolor[rgb]{0.40,0.40,0.40}{##1}}}
+\@namedef{PY@tok@gh}{\let\PY@bf=\textbf\def\PY@tc##1{\textcolor[rgb]{0.00,0.00,0.50}{##1}}}
+\@namedef{PY@tok@gu}{\let\PY@bf=\textbf\def\PY@tc##1{\textcolor[rgb]{0.50,0.00,0.50}{##1}}}
+\@namedef{PY@tok@gd}{\def\PY@tc##1{\textcolor[rgb]{0.63,0.00,0.00}{##1}}}
+\@namedef{PY@tok@gi}{\def\PY@tc##1{\textcolor[rgb]{0.00,0.52,0.00}{##1}}}
+\@namedef{PY@tok@gr}{\def\PY@tc##1{\textcolor[rgb]{0.89,0.00,0.00}{##1}}}
+\@namedef{PY@tok@ge}{\let\PY@it=\textit}
+\@namedef{PY@tok@gs}{\let\PY@bf=\textbf}
+\@namedef{PY@tok@ges}{\let\PY@bf=\textbf\let\PY@it=\textit}
+\@namedef{PY@tok@gp}{\let\PY@bf=\textbf\def\PY@tc##1{\textcolor[rgb]{0.00,0.00,0.50}{##1}}}
+\@namedef{PY@tok@go}{\def\PY@tc##1{\textcolor[rgb]{0.44,0.44,0.44}{##1}}}
+\@namedef{PY@tok@gt}{\def\PY@tc##1{\textcolor[rgb]{0.00,0.27,0.87}{##1}}}
+\@namedef{PY@tok@err}{\def\PY@bc##1{{\setlength{\fboxsep}{\string -\fboxrule}\fcolorbox[rgb]{1.00,0.00,0.00}{1,1,1}{\strut ##1}}}}
+\@namedef{PY@tok@kc}{\let\PY@bf=\textbf\def\PY@tc##1{\textcolor[rgb]{0.00,0.50,0.00}{##1}}}
+\@namedef{PY@tok@kd}{\let\PY@bf=\textbf\def\PY@tc##1{\textcolor[rgb]{0.00,0.50,0.00}{##1}}}
+\@namedef{PY@tok@kn}{\let\PY@bf=\textbf\def\PY@tc##1{\textcolor[rgb]{0.00,0.50,0.00}{##1}}}
+\@namedef{PY@tok@kr}{\let\PY@bf=\textbf\def\PY@tc##1{\textcolor[rgb]{0.00,0.50,0.00}{##1}}}
+\@namedef{PY@tok@bp}{\def\PY@tc##1{\textcolor[rgb]{0.00,0.50,0.00}{##1}}}
+\@namedef{PY@tok@fm}{\def\PY@tc##1{\textcolor[rgb]{0.00,0.00,1.00}{##1}}}
+\@namedef{PY@tok@vc}{\def\PY@tc##1{\textcolor[rgb]{0.10,0.09,0.49}{##1}}}
+\@namedef{PY@tok@vg}{\def\PY@tc##1{\textcolor[rgb]{0.10,0.09,0.49}{##1}}}
+\@namedef{PY@tok@vi}{\def\PY@tc##1{\textcolor[rgb]{0.10,0.09,0.49}{##1}}}
+\@namedef{PY@tok@vm}{\def\PY@tc##1{\textcolor[rgb]{0.10,0.09,0.49}{##1}}}
+\@namedef{PY@tok@sa}{\def\PY@tc##1{\textcolor[rgb]{0.73,0.13,0.13}{##1}}}
+\@namedef{PY@tok@sb}{\def\PY@tc##1{\textcolor[rgb]{0.73,0.13,0.13}{##1}}}
+\@namedef{PY@tok@sc}{\def\PY@tc##1{\textcolor[rgb]{0.73,0.13,0.13}{##1}}}
+\@namedef{PY@tok@dl}{\def\PY@tc##1{\textcolor[rgb]{0.73,0.13,0.13}{##1}}}
+\@namedef{PY@tok@s2}{\def\PY@tc##1{\textcolor[rgb]{0.73,0.13,0.13}{##1}}}
+\@namedef{PY@tok@sh}{\def\PY@tc##1{\textcolor[rgb]{0.73,0.13,0.13}{##1}}}
+\@namedef{PY@tok@s1}{\def\PY@tc##1{\textcolor[rgb]{0.73,0.13,0.13}{##1}}}
+\@namedef{PY@tok@mb}{\def\PY@tc##1{\textcolor[rgb]{0.40,0.40,0.40}{##1}}}
+\@namedef{PY@tok@mf}{\def\PY@tc##1{\textcolor[rgb]{0.40,0.40,0.40}{##1}}}
+\@namedef{PY@tok@mh}{\def\PY@tc##1{\textcolor[rgb]{0.40,0.40,0.40}{##1}}}
+\@namedef{PY@tok@mi}{\def\PY@tc##1{\textcolor[rgb]{0.40,0.40,0.40}{##1}}}
+\@namedef{PY@tok@il}{\def\PY@tc##1{\textcolor[rgb]{0.40,0.40,0.40}{##1}}}
+\@namedef{PY@tok@mo}{\def\PY@tc##1{\textcolor[rgb]{0.40,0.40,0.40}{##1}}}
+\@namedef{PY@tok@ch}{\let\PY@it=\textit\def\PY@tc##1{\textcolor[rgb]{0.24,0.48,0.48}{##1}}}
+\@namedef{PY@tok@cm}{\let\PY@it=\textit\def\PY@tc##1{\textcolor[rgb]{0.24,0.48,0.48}{##1}}}
+\@namedef{PY@tok@cpf}{\let\PY@it=\textit\def\PY@tc##1{\textcolor[rgb]{0.24,0.48,0.48}{##1}}}
+\@namedef{PY@tok@c1}{\let\PY@it=\textit\def\PY@tc##1{\textcolor[rgb]{0.24,0.48,0.48}{##1}}}
+\@namedef{PY@tok@cs}{\let\PY@it=\textit\def\PY@tc##1{\textcolor[rgb]{0.24,0.48,0.48}{##1}}}
+
+\def\PYZbs{\char`\\}
+\def\PYZus{\char`\_}
+\def\PYZob{\char`\{}
+\def\PYZcb{\char`\}}
+\def\PYZca{\char`\^}
+\def\PYZam{\char`\&}
+\def\PYZlt{\char`\<}
+\def\PYZgt{\char`\>}
+\def\PYZsh{\char`\#}
+\def\PYZpc{\char`\%}
+\def\PYZdl{\char`\$}
+\def\PYZhy{\char`\-}
+\def\PYZsq{\char`\'}
+\def\PYZdq{\char`\"}
+\def\PYZti{\char`\~}
+% for compatibility with earlier versions
+\def\PYZat{@}
+\def\PYZlb{[}
+\def\PYZrb{]}
+\makeatother
+
+
+    % For linebreaks inside Verbatim environment from package fancyvrb.
+    \makeatletter
+        \newbox\Wrappedcontinuationbox
+        \newbox\Wrappedvisiblespacebox
+        \newcommand*\Wrappedvisiblespace {\textcolor{red}{\textvisiblespace}}
+        \newcommand*\Wrappedcontinuationsymbol {\textcolor{red}{\llap{\tiny$\m@th\hookrightarrow$}}}
+        \newcommand*\Wrappedcontinuationindent {3ex }
+        \newcommand*\Wrappedafterbreak {\kern\Wrappedcontinuationindent\copy\Wrappedcontinuationbox}
+        % Take advantage of the already applied Pygments mark-up to insert
+        % potential linebreaks for TeX processing.
+        %        {, <, #, %, $, ' and ": go to next line.
+        %        _, }, ^, &, >, - and ~: stay at end of broken line.
+        % Use of \textquotesingle for straight quote.
+        \newcommand*\Wrappedbreaksatspecials {%
+            \def\PYGZus{\discretionary{\char`\_}{\Wrappedafterbreak}{\char`\_}}%
+            \def\PYGZob{\discretionary{}{\Wrappedafterbreak\char`\{}{\char`\{}}%
+            \def\PYGZcb{\discretionary{\char`\}}{\Wrappedafterbreak}{\char`\}}}%
+            \def\PYGZca{\discretionary{\char`\^}{\Wrappedafterbreak}{\char`\^}}%
+            \def\PYGZam{\discretionary{\char`\&}{\Wrappedafterbreak}{\char`\&}}%
+            \def\PYGZlt{\discretionary{}{\Wrappedafterbreak\char`\<}{\char`\<}}%
+            \def\PYGZgt{\discretionary{\char`\>}{\Wrappedafterbreak}{\char`\>}}%
+            \def\PYGZsh{\discretionary{}{\Wrappedafterbreak\char`\#}{\char`\#}}%
+            \def\PYGZpc{\discretionary{}{\Wrappedafterbreak\char`\%}{\char`\%}}%
+            \def\PYGZdl{\discretionary{}{\Wrappedafterbreak\char`\$}{\char`\$}}%
+            \def\PYGZhy{\discretionary{\char`\-}{\Wrappedafterbreak}{\char`\-}}%
+            \def\PYGZsq{\discretionary{}{\Wrappedafterbreak\textquotesingle}{\textquotesingle}}%
+            \def\PYGZdq{\discretionary{}{\Wrappedafterbreak\char`\"}{\char`\"}}%
+            \def\PYGZti{\discretionary{\char`\~}{\Wrappedafterbreak}{\char`\~}}%
+        }
+        % Some characters . , ; ? ! / are not pygmentized.
+        % This macro makes them "active" and they will insert potential linebreaks
+        \newcommand*\Wrappedbreaksatpunct {%
+            \lccode`\~`\.\lowercase{\def~}{\discretionary{\hbox{\char`\.}}{\Wrappedafterbreak}{\hbox{\char`\.}}}%
+            \lccode`\~`\,\lowercase{\def~}{\discretionary{\hbox{\char`\,}}{\Wrappedafterbreak}{\hbox{\char`\,}}}%
+            \lccode`\~`\;\lowercase{\def~}{\discretionary{\hbox{\char`\;}}{\Wrappedafterbreak}{\hbox{\char`\;}}}%
+            \lccode`\~`\:\lowercase{\def~}{\discretionary{\hbox{\char`\:}}{\Wrappedafterbreak}{\hbox{\char`\:}}}%
+            \lccode`\~`\?\lowercase{\def~}{\discretionary{\hbox{\char`\?}}{\Wrappedafterbreak}{\hbox{\char`\?}}}%
+            \lccode`\~`\!\lowercase{\def~}{\discretionary{\hbox{\char`\!}}{\Wrappedafterbreak}{\hbox{\char`\!}}}%
+            \lccode`\~`\/\lowercase{\def~}{\discretionary{\hbox{\char`\/}}{\Wrappedafterbreak}{\hbox{\char`\/}}}%
+            \catcode`\.\active
+            \catcode`\,\active
+            \catcode`\;\active
+            \catcode`\:\active
+            \catcode`\?\active
+            \catcode`\!\active
+            \catcode`\/\active
+            \lccode`\~`\~
+        }
+    \makeatother
+
+    \let\OriginalVerbatim=\Verbatim
+    \makeatletter
+    \renewcommand{\Verbatim}[1][1]{%
+        %\parskip\z@skip
+        \sbox\Wrappedcontinuationbox {\Wrappedcontinuationsymbol}%
+        \sbox\Wrappedvisiblespacebox {\FV@SetupFont\Wrappedvisiblespace}%
+        \def\FancyVerbFormatLine ##1{\hsize\linewidth
+            \vtop{\raggedright\hyphenpenalty\z@\exhyphenpenalty\z@
+                \doublehyphendemerits\z@\finalhyphendemerits\z@
+                \strut ##1\strut}%
+        }%
+        % If the linebreak is at a space, the latter will be displayed as visible
+        % space at end of first line, and a continuation symbol starts next line.
+        % Stretch/shrink are however usually zero for typewriter font.
+        \def\FV@Space {%
+            \nobreak\hskip\z@ plus\fontdimen3\font minus\fontdimen4\font
+            \discretionary{\copy\Wrappedvisiblespacebox}{\Wrappedafterbreak}
+            {\kern\fontdimen2\font}%
+        }%
+
+        % Allow breaks at special characters using \PYG... macros.
+        \Wrappedbreaksatspecials
+        % Breaks at punctuation characters . , ; ? ! and / need catcode=\active
+        \OriginalVerbatim[#1,codes*=\Wrappedbreaksatpunct]%
+    }
+    \makeatother
+
+    % Exact colors from NB
+    \definecolor{incolor}{HTML}{303F9F}
+    \definecolor{outcolor}{HTML}{D84315}
+    \definecolor{cellborder}{HTML}{CFCFCF}
+    \definecolor{cellbackground}{HTML}{F7F7F7}
+
+    % prompt
+    \makeatletter
+    \newcommand{\boxspacing}{\kern\kvtcb@left@rule\kern\kvtcb@boxsep}
+    \makeatother
+    \newcommand{\prompt}[4]{
+        {\ttfamily\llap{{\color{#2}[#3]:\hspace{3pt}#4}}\vspace{-\baselineskip}}
+    }
+    
+
+    
+    % Prevent overflowing lines due to hard-to-break entities
+    \sloppy
+    % Setup hyperref package
+    \hypersetup{
+      breaklinks=true,  % so long urls are correctly broken across lines
+      colorlinks=true,
+      urlcolor=urlcolor,
+      linkcolor=linkcolor,
+      citecolor=citecolor,
+      }
+    % Slightly bigger margins than the latex defaults
+    
+    \geometry{verbose,tmargin=1in,bmargin=1in,lmargin=1in,rmargin=1in}
+    
+    
+
+\begin{document}
+    
+    \maketitle
+    
+    
+
+    
+    
+
+    \section{Student Performance Prediction using Explainable AI and
+Fairness}\label{student-performance-prediction-using-explainable-ai-and-fairness}
+
+This notebook implements a complete ML pipeline integrating: -
+Predictive modeling - Explainable AI (SHAP, LIME) - Fairness analysis -
+Human-in-the-loop validation
+
+    \begin{tcolorbox}[breakable, size=fbox, boxrule=1pt, pad at break*=1mm,colback=cellbackground, colframe=cellborder]
+\prompt{In}{incolor}{1}{\boxspacing}
+\begin{Verbatim}[commandchars=\\\{\}]
+\PY{c+c1}{\PYZsh{} Installations}
+\PY{o}{!}pip\PY{+w}{ }install\PY{+w}{ }lime
+\PY{o}{!}pip\PY{+w}{ }install\PY{+w}{ }ipywidgets
+\PY{o}{!}pip\PY{+w}{ }install\PY{+w}{ }imbalanced\PYZhy{}learn\PY{o}{=}\PY{o}{=}\PY{l+m}{0}.12.2
+\PY{o}{!}pip\PY{+w}{ }install\PY{+w}{ }\PY{n+nv}{xgboost}\PY{o}{=}\PY{o}{=}\PY{l+m}{2}.0.3
+\PY{o}{!}pip\PY{+w}{ }install\PY{+w}{ }\PY{l+s+s2}{\PYZdq{}ipython\PYZlt{}8.12\PYZdq{}}
+\end{Verbatim}
+\end{tcolorbox}
+
+    \begin{Verbatim}[commandchars=\\\{\}]
+Requirement already satisfied: lime in ./.spenv/lib/python3.11/site-packages
+(0.2.0.1)
+Requirement already satisfied: matplotlib in ./.spenv/lib/python3.11/site-
+packages (from lime) (3.10.8)
+Requirement already satisfied: numpy in ./.spenv/lib/python3.11/site-packages
+(from lime) (2.3.5)
+Requirement already satisfied: scipy in ./.spenv/lib/python3.11/site-packages
+(from lime) (1.17.0)
+Requirement already satisfied: tqdm in ./.spenv/lib/python3.11/site-packages
+(from lime) (4.67.2)
+Requirement already satisfied: scikit-learn>=0.18 in
+./.spenv/lib/python3.11/site-packages (from lime) (1.4.2)
+Requirement already satisfied: scikit-image>=0.12 in
+./.spenv/lib/python3.11/site-packages (from lime) (0.26.0)
+Requirement already satisfied: networkx>=3.0 in ./.spenv/lib/python3.11/site-
+packages (from scikit-image>=0.12->lime) (3.6.1)
+Requirement already satisfied: pillow>=10.1 in ./.spenv/lib/python3.11/site-
+packages (from scikit-image>=0.12->lime) (12.1.0)
+Requirement already satisfied: imageio!=2.35.0,>=2.33 in
+./.spenv/lib/python3.11/site-packages (from scikit-image>=0.12->lime) (2.37.2)
+Requirement already satisfied: tifffile>=2022.8.12 in
+./.spenv/lib/python3.11/site-packages (from scikit-image>=0.12->lime)
+(2026.1.28)
+Requirement already satisfied: packaging>=21 in ./.spenv/lib/python3.11/site-
+packages (from scikit-image>=0.12->lime) (26.0)
+Requirement already satisfied: lazy-loader>=0.4 in ./.spenv/lib/python3.11/site-
+packages (from scikit-image>=0.12->lime) (0.4)
+Requirement already satisfied: joblib>=1.2.0 in ./.spenv/lib/python3.11/site-
+packages (from scikit-learn>=0.18->lime) (1.5.3)
+Requirement already satisfied: threadpoolctl>=2.0.0 in
+./.spenv/lib/python3.11/site-packages (from scikit-learn>=0.18->lime) (3.6.0)
+Requirement already satisfied: contourpy>=1.0.1 in ./.spenv/lib/python3.11/site-
+packages (from matplotlib->lime) (1.3.3)
+Requirement already satisfied: cycler>=0.10 in ./.spenv/lib/python3.11/site-
+packages (from matplotlib->lime) (0.12.1)
+Requirement already satisfied: fonttools>=4.22.0 in
+./.spenv/lib/python3.11/site-packages (from matplotlib->lime) (4.61.1)
+Requirement already satisfied: kiwisolver>=1.3.1 in
+./.spenv/lib/python3.11/site-packages (from matplotlib->lime) (1.4.9)
+Requirement already satisfied: pyparsing>=3 in ./.spenv/lib/python3.11/site-
+packages (from matplotlib->lime) (3.3.2)
+Requirement already satisfied: python-dateutil>=2.7 in
+./.spenv/lib/python3.11/site-packages (from matplotlib->lime) (2.9.0.post0)
+Requirement already satisfied: six>=1.5 in ./.spenv/lib/python3.11/site-packages
+(from python-dateutil>=2.7->matplotlib->lime) (1.17.0)
+Requirement already satisfied: ipywidgets in ./.spenv/lib/python3.11/site-
+packages (8.1.8)
+Requirement already satisfied: comm>=0.1.3 in ./.spenv/lib/python3.11/site-
+packages (from ipywidgets) (0.2.3)
+Requirement already satisfied: ipython>=6.1.0 in ./.spenv/lib/python3.11/site-
+packages (from ipywidgets) (8.11.0)
+Requirement already satisfied: traitlets>=4.3.1 in ./.spenv/lib/python3.11/site-
+packages (from ipywidgets) (5.14.3)
+Requirement already satisfied: widgetsnbextension\textasciitilde{}=4.0.14 in
+./.spenv/lib/python3.11/site-packages (from ipywidgets) (4.0.15)
+Requirement already satisfied: jupyterlab\_widgets\textasciitilde{}=3.0.15 in
+./.spenv/lib/python3.11/site-packages (from ipywidgets) (3.0.16)
+Requirement already satisfied: backcall in ./.spenv/lib/python3.11/site-packages
+(from ipython>=6.1.0->ipywidgets) (0.2.0)
+Requirement already satisfied: decorator in ./.spenv/lib/python3.11/site-
+packages (from ipython>=6.1.0->ipywidgets) (5.2.1)
+Requirement already satisfied: jedi>=0.16 in ./.spenv/lib/python3.11/site-
+packages (from ipython>=6.1.0->ipywidgets) (0.19.2)
+Requirement already satisfied: matplotlib-inline in
+./.spenv/lib/python3.11/site-packages (from ipython>=6.1.0->ipywidgets) (0.2.1)
+Requirement already satisfied: pickleshare in ./.spenv/lib/python3.11/site-
+packages (from ipython>=6.1.0->ipywidgets) (0.7.5)
+Requirement already satisfied: prompt-toolkit!=3.0.37,<3.1.0,>=3.0.30 in
+./.spenv/lib/python3.11/site-packages (from ipython>=6.1.0->ipywidgets) (3.0.52)
+Requirement already satisfied: pygments>=2.4.0 in ./.spenv/lib/python3.11/site-
+packages (from ipython>=6.1.0->ipywidgets) (2.19.2)
+Requirement already satisfied: stack-data in ./.spenv/lib/python3.11/site-
+packages (from ipython>=6.1.0->ipywidgets) (0.6.3)
+Requirement already satisfied: pexpect>4.3 in ./.spenv/lib/python3.11/site-
+packages (from ipython>=6.1.0->ipywidgets) (4.9.0)
+Requirement already satisfied: wcwidth in ./.spenv/lib/python3.11/site-packages
+(from prompt-toolkit!=3.0.37,<3.1.0,>=3.0.30->ipython>=6.1.0->ipywidgets)
+(0.5.3)
+Requirement already satisfied: parso<0.9.0,>=0.8.4 in
+./.spenv/lib/python3.11/site-packages (from
+jedi>=0.16->ipython>=6.1.0->ipywidgets) (0.8.5)
+Requirement already satisfied: ptyprocess>=0.5 in ./.spenv/lib/python3.11/site-
+packages (from pexpect>4.3->ipython>=6.1.0->ipywidgets) (0.7.0)
+Requirement already satisfied: executing>=1.2.0 in ./.spenv/lib/python3.11/site-
+packages (from stack-data->ipython>=6.1.0->ipywidgets) (2.2.1)
+Requirement already satisfied: asttokens>=2.1.0 in ./.spenv/lib/python3.11/site-
+packages (from stack-data->ipython>=6.1.0->ipywidgets) (3.0.1)
+Requirement already satisfied: pure-eval in ./.spenv/lib/python3.11/site-
+packages (from stack-data->ipython>=6.1.0->ipywidgets) (0.2.3)
+Requirement already satisfied: imbalanced-learn==0.12.2 in
+./.spenv/lib/python3.11/site-packages (0.12.2)
+Requirement already satisfied: numpy>=1.17.3 in ./.spenv/lib/python3.11/site-
+packages (from imbalanced-learn==0.12.2) (2.3.5)
+Requirement already satisfied: scipy>=1.5.0 in ./.spenv/lib/python3.11/site-
+packages (from imbalanced-learn==0.12.2) (1.17.0)
+Requirement already satisfied: scikit-learn>=1.0.2 in
+./.spenv/lib/python3.11/site-packages (from imbalanced-learn==0.12.2) (1.4.2)
+Requirement already satisfied: joblib>=1.1.1 in ./.spenv/lib/python3.11/site-
+packages (from imbalanced-learn==0.12.2) (1.5.3)
+Requirement already satisfied: threadpoolctl>=2.0.0 in
+./.spenv/lib/python3.11/site-packages (from imbalanced-learn==0.12.2) (3.6.0)
+Requirement already satisfied: xgboost==2.0.3 in ./.spenv/lib/python3.11/site-
+packages (2.0.3)
+Requirement already satisfied: numpy in ./.spenv/lib/python3.11/site-packages
+(from xgboost==2.0.3) (2.3.5)
+Requirement already satisfied: scipy in ./.spenv/lib/python3.11/site-packages
+(from xgboost==2.0.3) (1.17.0)
+Requirement already satisfied: ipython<8.12 in ./.spenv/lib/python3.11/site-
+packages (8.11.0)
+Requirement already satisfied: backcall in ./.spenv/lib/python3.11/site-packages
+(from ipython<8.12) (0.2.0)
+Requirement already satisfied: decorator in ./.spenv/lib/python3.11/site-
+packages (from ipython<8.12) (5.2.1)
+Requirement already satisfied: jedi>=0.16 in ./.spenv/lib/python3.11/site-
+packages (from ipython<8.12) (0.19.2)
+Requirement already satisfied: matplotlib-inline in
+./.spenv/lib/python3.11/site-packages (from ipython<8.12) (0.2.1)
+Requirement already satisfied: pickleshare in ./.spenv/lib/python3.11/site-
+packages (from ipython<8.12) (0.7.5)
+Requirement already satisfied: prompt-toolkit!=3.0.37,<3.1.0,>=3.0.30 in
+./.spenv/lib/python3.11/site-packages (from ipython<8.12) (3.0.52)
+Requirement already satisfied: pygments>=2.4.0 in ./.spenv/lib/python3.11/site-
+packages (from ipython<8.12) (2.19.2)
+Requirement already satisfied: stack-data in ./.spenv/lib/python3.11/site-
+packages (from ipython<8.12) (0.6.3)
+Requirement already satisfied: traitlets>=5 in ./.spenv/lib/python3.11/site-
+packages (from ipython<8.12) (5.14.3)
+Requirement already satisfied: pexpect>4.3 in ./.spenv/lib/python3.11/site-
+packages (from ipython<8.12) (4.9.0)
+Requirement already satisfied: wcwidth in ./.spenv/lib/python3.11/site-packages
+(from prompt-toolkit!=3.0.37,<3.1.0,>=3.0.30->ipython<8.12) (0.5.3)
+Requirement already satisfied: parso<0.9.0,>=0.8.4 in
+./.spenv/lib/python3.11/site-packages (from jedi>=0.16->ipython<8.12) (0.8.5)
+Requirement already satisfied: ptyprocess>=0.5 in ./.spenv/lib/python3.11/site-
+packages (from pexpect>4.3->ipython<8.12) (0.7.0)
+Requirement already satisfied: executing>=1.2.0 in ./.spenv/lib/python3.11/site-
+packages (from stack-data->ipython<8.12) (2.2.1)
+Requirement already satisfied: asttokens>=2.1.0 in ./.spenv/lib/python3.11/site-
+packages (from stack-data->ipython<8.12) (3.0.1)
+Requirement already satisfied: pure-eval in ./.spenv/lib/python3.11/site-
+packages (from stack-data->ipython<8.12) (0.2.3)
+    \end{Verbatim}
+
+    \begin{tcolorbox}[breakable, size=fbox, boxrule=1pt, pad at break*=1mm,colback=cellbackground, colframe=cellborder]
+\prompt{In}{incolor}{2}{\boxspacing}
+\begin{Verbatim}[commandchars=\\\{\}]
+\PY{c+c1}{\PYZsh{} Import}
+\PY{k+kn}{import}\PY{+w}{ }\PY{n+nn}{numpy}\PY{+w}{ }\PY{k}{as}\PY{+w}{ }\PY{n+nn}{np}
+\PY{k+kn}{import}\PY{+w}{ }\PY{n+nn}{pandas}\PY{+w}{ }\PY{k}{as}\PY{+w}{ }\PY{n+nn}{pd}
+\PY{k+kn}{import}\PY{+w}{ }\PY{n+nn}{matplotlib}\PY{n+nn}{.}\PY{n+nn}{pyplot}\PY{+w}{ }\PY{k}{as}\PY{+w}{ }\PY{n+nn}{plt}
+\PY{k+kn}{import}\PY{+w}{ }\PY{n+nn}{seaborn}\PY{+w}{ }\PY{k}{as}\PY{+w}{ }\PY{n+nn}{sns}
+\PY{k+kn}{import}\PY{+w}{ }\PY{n+nn}{shap}
+\PY{n}{shap}\PY{o}{.}\PY{n}{initjs}\PY{p}{(}\PY{p}{)}
+\PY{k+kn}{import}\PY{+w}{ }\PY{n+nn}{warnings}
+\PY{n}{warnings}\PY{o}{.}\PY{n}{filterwarnings}\PY{p}{(}\PY{l+s+s2}{\PYZdq{}}\PY{l+s+s2}{ignore}\PY{l+s+s2}{\PYZdq{}}\PY{p}{,} \PY{n}{category}\PY{o}{=}\PY{n+ne}{FutureWarning}\PY{p}{)}
+\end{Verbatim}
+\end{tcolorbox}
+
+    
+    \begin{Verbatim}[commandchars=\\\{\}]
+<IPython.core.display.HTML object>
+    \end{Verbatim}
+
+    
+    \begin{tcolorbox}[breakable, size=fbox, boxrule=1pt, pad at break*=1mm,colback=cellbackground, colframe=cellborder]
+\prompt{In}{incolor}{3}{\boxspacing}
+\begin{Verbatim}[commandchars=\\\{\}]
+\PY{c+c1}{\PYZsh{} Reproducibility Controls}
+\PY{n}{RANDOM\PYZus{}STATE} \PY{o}{=} \PY{l+m+mi}{42}
+\PY{n}{np}\PY{o}{.}\PY{n}{random}\PY{o}{.}\PY{n}{seed}\PY{p}{(}\PY{n}{RANDOM\PYZus{}STATE}\PY{p}{)}
+\end{Verbatim}
+\end{tcolorbox}
+
+    \begin{tcolorbox}[breakable, size=fbox, boxrule=1pt, pad at break*=1mm,colback=cellbackground, colframe=cellborder]
+\prompt{In}{incolor}{4}{\boxspacing}
+\begin{Verbatim}[commandchars=\\\{\}]
+\PY{c+c1}{\PYZsh{} Dataset Loading}
+\PY{n}{df} \PY{o}{=} \PY{n}{pd}\PY{o}{.}\PY{n}{read\PYZus{}csv}\PY{p}{(}\PY{l+s+s2}{\PYZdq{}}\PY{l+s+s2}{student\PYZhy{}mat.csv}\PY{l+s+s2}{\PYZdq{}}\PY{p}{,} \PY{n}{sep}\PY{o}{=}\PY{l+s+s2}{\PYZdq{}}\PY{l+s+s2}{;}\PY{l+s+s2}{\PYZdq{}}\PY{p}{)}
+\PY{n}{df}
+\end{Verbatim}
+\end{tcolorbox}
+
+            \begin{tcolorbox}[breakable, size=fbox, boxrule=.5pt, pad at break*=1mm, opacityfill=0]
+\prompt{Out}{outcolor}{4}{\boxspacing}
+\begin{Verbatim}[commandchars=\\\{\}]
+    school sex  age address famsize Pstatus  Medu  Fedu      Mjob      Fjob  \textbackslash{}
+0       GP   F   18       U     GT3       A     4     4   at\_home   teacher
+1       GP   F   17       U     GT3       T     1     1   at\_home     other
+2       GP   F   15       U     LE3       T     1     1   at\_home     other
+3       GP   F   15       U     GT3       T     4     2    health  services
+4       GP   F   16       U     GT3       T     3     3     other     other
+..     {\ldots}  ..  {\ldots}     {\ldots}     {\ldots}     {\ldots}   {\ldots}   {\ldots}       {\ldots}       {\ldots}
+390     MS   M   20       U     LE3       A     2     2  services  services
+391     MS   M   17       U     LE3       T     3     1  services  services
+392     MS   M   21       R     GT3       T     1     1     other     other
+393     MS   M   18       R     LE3       T     3     2  services     other
+394     MS   M   19       U     LE3       T     1     1     other   at\_home
+
+     {\ldots} famrel freetime  goout  Dalc  Walc health absences  G1  G2  G3
+0    {\ldots}      4        3      4     1     1      3        6   5   6   6
+1    {\ldots}      5        3      3     1     1      3        4   5   5   6
+2    {\ldots}      4        3      2     2     3      3       10   7   8  10
+3    {\ldots}      3        2      2     1     1      5        2  15  14  15
+4    {\ldots}      4        3      2     1     2      5        4   6  10  10
+..   {\ldots}    {\ldots}      {\ldots}    {\ldots}   {\ldots}   {\ldots}    {\ldots}      {\ldots}  ..  ..  ..
+390  {\ldots}      5        5      4     4     5      4       11   9   9   9
+391  {\ldots}      2        4      5     3     4      2        3  14  16  16
+392  {\ldots}      5        5      3     3     3      3        3  10   8   7
+393  {\ldots}      4        4      1     3     4      5        0  11  12  10
+394  {\ldots}      3        2      3     3     3      5        5   8   9   9
+
+[395 rows x 33 columns]
+\end{Verbatim}
+\end{tcolorbox}
+        
+    \begin{tcolorbox}[breakable, size=fbox, boxrule=1pt, pad at break*=1mm,colback=cellbackground, colframe=cellborder]
+\prompt{In}{incolor}{5}{\boxspacing}
+\begin{Verbatim}[commandchars=\\\{\}]
+\PY{n}{df}\PY{o}{.}\PY{n}{info}\PY{p}{(}\PY{p}{)}
+\PY{n}{df}\PY{o}{.}\PY{n}{describe}\PY{p}{(}\PY{p}{)}
+\end{Verbatim}
+\end{tcolorbox}
+
+    \begin{Verbatim}[commandchars=\\\{\}]
+<class 'pandas.DataFrame'>
+RangeIndex: 395 entries, 0 to 394
+Data columns (total 33 columns):
+ \#   Column      Non-Null Count  Dtype
+---  ------      --------------  -----
+ 0   school      395 non-null    str
+ 1   sex         395 non-null    str
+ 2   age         395 non-null    int64
+ 3   address     395 non-null    str
+ 4   famsize     395 non-null    str
+ 5   Pstatus     395 non-null    str
+ 6   Medu        395 non-null    int64
+ 7   Fedu        395 non-null    int64
+ 8   Mjob        395 non-null    str
+ 9   Fjob        395 non-null    str
+ 10  reason      395 non-null    str
+ 11  guardian    395 non-null    str
+ 12  traveltime  395 non-null    int64
+ 13  studytime   395 non-null    int64
+ 14  failures    395 non-null    int64
+ 15  schoolsup   395 non-null    str
+ 16  famsup      395 non-null    str
+ 17  paid        395 non-null    str
+ 18  activities  395 non-null    str
+ 19  nursery     395 non-null    str
+ 20  higher      395 non-null    str
+ 21  internet    395 non-null    str
+ 22  romantic    395 non-null    str
+ 23  famrel      395 non-null    int64
+ 24  freetime    395 non-null    int64
+ 25  goout       395 non-null    int64
+ 26  Dalc        395 non-null    int64
+ 27  Walc        395 non-null    int64
+ 28  health      395 non-null    int64
+ 29  absences    395 non-null    int64
+ 30  G1          395 non-null    int64
+ 31  G2          395 non-null    int64
+ 32  G3          395 non-null    int64
+dtypes: int64(16), str(17)
+memory usage: 102.0 KB
+    \end{Verbatim}
+
+            \begin{tcolorbox}[breakable, size=fbox, boxrule=.5pt, pad at break*=1mm, opacityfill=0]
+\prompt{Out}{outcolor}{5}{\boxspacing}
+\begin{Verbatim}[commandchars=\\\{\}]
+              age        Medu        Fedu  traveltime   studytime    failures  \textbackslash{}
+count  395.000000  395.000000  395.000000  395.000000  395.000000  395.000000
+mean    16.696203    2.749367    2.521519    1.448101    2.035443    0.334177
+std      1.276043    1.094735    1.088201    0.697505    0.839240    0.743651
+min     15.000000    0.000000    0.000000    1.000000    1.000000    0.000000
+25\%     16.000000    2.000000    2.000000    1.000000    1.000000    0.000000
+50\%     17.000000    3.000000    2.000000    1.000000    2.000000    0.000000
+75\%     18.000000    4.000000    3.000000    2.000000    2.000000    0.000000
+max     22.000000    4.000000    4.000000    4.000000    4.000000    3.000000
+
+           famrel    freetime       goout        Dalc        Walc      health  \textbackslash{}
+count  395.000000  395.000000  395.000000  395.000000  395.000000  395.000000
+mean     3.944304    3.235443    3.108861    1.481013    2.291139    3.554430
+std      0.896659    0.998862    1.113278    0.890741    1.287897    1.390303
+min      1.000000    1.000000    1.000000    1.000000    1.000000    1.000000
+25\%      4.000000    3.000000    2.000000    1.000000    1.000000    3.000000
+50\%      4.000000    3.000000    3.000000    1.000000    2.000000    4.000000
+75\%      5.000000    4.000000    4.000000    2.000000    3.000000    5.000000
+max      5.000000    5.000000    5.000000    5.000000    5.000000    5.000000
+
+         absences          G1          G2          G3
+count  395.000000  395.000000  395.000000  395.000000
+mean     5.708861   10.908861   10.713924   10.415190
+std      8.003096    3.319195    3.761505    4.581443
+min      0.000000    3.000000    0.000000    0.000000
+25\%      0.000000    8.000000    9.000000    8.000000
+50\%      4.000000   11.000000   11.000000   11.000000
+75\%      8.000000   13.000000   13.000000   14.000000
+max     75.000000   19.000000   19.000000   20.000000
+\end{Verbatim}
+\end{tcolorbox}
+        
+    \begin{tcolorbox}[breakable, size=fbox, boxrule=1pt, pad at break*=1mm,colback=cellbackground, colframe=cellborder]
+\prompt{In}{incolor}{6}{\boxspacing}
+\begin{Verbatim}[commandchars=\\\{\}]
+\PY{n}{df}\PY{p}{[}\PY{l+s+s1}{\PYZsq{}}\PY{l+s+s1}{pass}\PY{l+s+s1}{\PYZsq{}}\PY{p}{]} \PY{o}{=} \PY{p}{(}\PY{n}{df}\PY{p}{[}\PY{l+s+s1}{\PYZsq{}}\PY{l+s+s1}{G3}\PY{l+s+s1}{\PYZsq{}}\PY{p}{]} \PY{o}{\PYZgt{}}\PY{o}{=} \PY{l+m+mi}{10}\PY{p}{)}\PY{o}{.}\PY{n}{astype}\PY{p}{(}\PY{n+nb}{int}\PY{p}{)}
+
+\PY{n}{df}\PY{p}{[}\PY{l+s+s1}{\PYZsq{}}\PY{l+s+s1}{grade\PYZus{}growth}\PY{l+s+s1}{\PYZsq{}}\PY{p}{]} \PY{o}{=} \PY{n}{df}\PY{p}{[}\PY{l+s+s1}{\PYZsq{}}\PY{l+s+s1}{G2}\PY{l+s+s1}{\PYZsq{}}\PY{p}{]} \PY{o}{\PYZhy{}} \PY{n}{df}\PY{p}{[}\PY{l+s+s1}{\PYZsq{}}\PY{l+s+s1}{G1}\PY{l+s+s1}{\PYZsq{}}\PY{p}{]}
+\PY{n}{df}\PY{p}{[}\PY{l+s+s1}{\PYZsq{}}\PY{l+s+s1}{attendance\PYZus{}ratio}\PY{l+s+s1}{\PYZsq{}}\PY{p}{]} \PY{o}{=} \PY{n}{df}\PY{p}{[}\PY{l+s+s1}{\PYZsq{}}\PY{l+s+s1}{absences}\PY{l+s+s1}{\PYZsq{}}\PY{p}{]} \PY{o}{/} \PY{p}{(}\PY{n}{df}\PY{p}{[}\PY{l+s+s1}{\PYZsq{}}\PY{l+s+s1}{absences}\PY{l+s+s1}{\PYZsq{}}\PY{p}{]} \PY{o}{+} \PY{l+m+mi}{1}\PY{p}{)}
+\end{Verbatim}
+\end{tcolorbox}
+
+    \begin{tcolorbox}[breakable, size=fbox, boxrule=1pt, pad at break*=1mm,colback=cellbackground, colframe=cellborder]
+\prompt{In}{incolor}{7}{\boxspacing}
+\begin{Verbatim}[commandchars=\\\{\}]
+\PY{c+c1}{\PYZsh{} Feature Section}
+\PY{n}{features} \PY{o}{=} \PY{p}{[}
+    \PY{l+s+s1}{\PYZsq{}}\PY{l+s+s1}{school}\PY{l+s+s1}{\PYZsq{}}\PY{p}{,} \PY{l+s+s1}{\PYZsq{}}\PY{l+s+s1}{sex}\PY{l+s+s1}{\PYZsq{}}\PY{p}{,} \PY{l+s+s1}{\PYZsq{}}\PY{l+s+s1}{age}\PY{l+s+s1}{\PYZsq{}}\PY{p}{,} \PY{l+s+s1}{\PYZsq{}}\PY{l+s+s1}{address}\PY{l+s+s1}{\PYZsq{}}\PY{p}{,}
+    \PY{l+s+s1}{\PYZsq{}}\PY{l+s+s1}{famsize}\PY{l+s+s1}{\PYZsq{}}\PY{p}{,} \PY{l+s+s1}{\PYZsq{}}\PY{l+s+s1}{Pstatus}\PY{l+s+s1}{\PYZsq{}}\PY{p}{,} \PY{l+s+s1}{\PYZsq{}}\PY{l+s+s1}{Medu}\PY{l+s+s1}{\PYZsq{}}\PY{p}{,} \PY{l+s+s1}{\PYZsq{}}\PY{l+s+s1}{Fedu}\PY{l+s+s1}{\PYZsq{}}\PY{p}{,}
+    \PY{l+s+s1}{\PYZsq{}}\PY{l+s+s1}{failures}\PY{l+s+s1}{\PYZsq{}}\PY{p}{,} \PY{l+s+s1}{\PYZsq{}}\PY{l+s+s1}{absences}\PY{l+s+s1}{\PYZsq{}}\PY{p}{,} \PY{l+s+s1}{\PYZsq{}}\PY{l+s+s1}{G1}\PY{l+s+s1}{\PYZsq{}}\PY{p}{,} \PY{l+s+s1}{\PYZsq{}}\PY{l+s+s1}{G2}\PY{l+s+s1}{\PYZsq{}}
+\PY{p}{]}
+\PY{n}{X} \PY{o}{=} \PY{n}{df}\PY{p}{[}\PY{n}{features}\PY{p}{]}
+\PY{n}{y} \PY{o}{=} \PY{n}{df}\PY{p}{[}\PY{l+s+s1}{\PYZsq{}}\PY{l+s+s1}{pass}\PY{l+s+s1}{\PYZsq{}}\PY{p}{]}
+\end{Verbatim}
+\end{tcolorbox}
+
+    \begin{tcolorbox}[breakable, size=fbox, boxrule=1pt, pad at break*=1mm,colback=cellbackground, colframe=cellborder]
+\prompt{In}{incolor}{8}{\boxspacing}
+\begin{Verbatim}[commandchars=\\\{\}]
+\PY{c+c1}{\PYZsh{} Encoding \PYZam{} Preprocessing}
+\PY{n}{X} \PY{o}{=} \PY{n}{pd}\PY{o}{.}\PY{n}{get\PYZus{}dummies}\PY{p}{(}\PY{n}{X}\PY{p}{,} \PY{n}{drop\PYZus{}first}\PY{o}{=}\PY{k+kc}{True}\PY{p}{)}
+
+\PY{k+kn}{from}\PY{+w}{ }\PY{n+nn}{sklearn}\PY{n+nn}{.}\PY{n+nn}{preprocessing}\PY{+w}{ }\PY{k+kn}{import} \PY{n}{StandardScaler}
+\PY{n}{scaler} \PY{o}{=} \PY{n}{StandardScaler}\PY{p}{(}\PY{p}{)}
+\PY{n}{X}\PY{p}{[}\PY{p}{[}\PY{l+s+s1}{\PYZsq{}}\PY{l+s+s1}{age}\PY{l+s+s1}{\PYZsq{}}\PY{p}{,} \PY{l+s+s1}{\PYZsq{}}\PY{l+s+s1}{absences}\PY{l+s+s1}{\PYZsq{}}\PY{p}{,} \PY{l+s+s1}{\PYZsq{}}\PY{l+s+s1}{G1}\PY{l+s+s1}{\PYZsq{}}\PY{p}{,} \PY{l+s+s1}{\PYZsq{}}\PY{l+s+s1}{G2}\PY{l+s+s1}{\PYZsq{}}\PY{p}{]}\PY{p}{]} \PY{o}{=} \PY{n}{scaler}\PY{o}{.}\PY{n}{fit\PYZus{}transform}\PY{p}{(}
+    \PY{n}{X}\PY{p}{[}\PY{p}{[}\PY{l+s+s1}{\PYZsq{}}\PY{l+s+s1}{age}\PY{l+s+s1}{\PYZsq{}}\PY{p}{,} \PY{l+s+s1}{\PYZsq{}}\PY{l+s+s1}{absences}\PY{l+s+s1}{\PYZsq{}}\PY{p}{,} \PY{l+s+s1}{\PYZsq{}}\PY{l+s+s1}{G1}\PY{l+s+s1}{\PYZsq{}}\PY{p}{,} \PY{l+s+s1}{\PYZsq{}}\PY{l+s+s1}{G2}\PY{l+s+s1}{\PYZsq{}}\PY{p}{]}\PY{p}{]}
+\PY{p}{)}
+\end{Verbatim}
+\end{tcolorbox}
+
+    \begin{tcolorbox}[breakable, size=fbox, boxrule=1pt, pad at break*=1mm,colback=cellbackground, colframe=cellborder]
+\prompt{In}{incolor}{9}{\boxspacing}
+\begin{Verbatim}[commandchars=\\\{\}]
+\PY{c+c1}{\PYZsh{} Train/Test Split}
+\PY{k+kn}{from}\PY{+w}{ }\PY{n+nn}{sklearn}\PY{n+nn}{.}\PY{n+nn}{model\PYZus{}selection}\PY{+w}{ }\PY{k+kn}{import} \PY{n}{train\PYZus{}test\PYZus{}split}
+
+\PY{n}{X\PYZus{}train}\PY{p}{,} \PY{n}{X\PYZus{}test}\PY{p}{,} \PY{n}{y\PYZus{}train}\PY{p}{,} \PY{n}{y\PYZus{}test} \PY{o}{=} \PY{n}{train\PYZus{}test\PYZus{}split}\PY{p}{(}
+    \PY{n}{X}\PY{p}{,} \PY{n}{y}\PY{p}{,} \PY{n}{test\PYZus{}size}\PY{o}{=}\PY{l+m+mf}{0.2}\PY{p}{,} \PY{n}{random\PYZus{}state}\PY{o}{=}\PY{n}{RANDOM\PYZus{}STATE}\PY{p}{,} \PY{n}{stratify}\PY{o}{=}\PY{n}{y}
+\PY{p}{)}
+\end{Verbatim}
+\end{tcolorbox}
+
+    \begin{tcolorbox}[breakable, size=fbox, boxrule=1pt, pad at break*=1mm,colback=cellbackground, colframe=cellborder]
+\prompt{In}{incolor}{10}{\boxspacing}
+\begin{Verbatim}[commandchars=\\\{\}]
+\PY{c+c1}{\PYZsh{} Class Imbalance Handling (SMOTE)}
+\PY{k+kn}{from}\PY{+w}{ }\PY{n+nn}{sklearn}\PY{n+nn}{.}\PY{n+nn}{model\PYZus{}selection}\PY{+w}{ }\PY{k+kn}{import} \PY{n}{train\PYZus{}test\PYZus{}split}
+\PY{k+kn}{from}\PY{+w}{ }\PY{n+nn}{imblearn}\PY{n+nn}{.}\PY{n+nn}{over\PYZus{}sampling}\PY{+w}{ }\PY{k+kn}{import} \PY{n}{SMOTE}
+
+\PY{n}{X\PYZus{}train}\PY{p}{,} \PY{n}{X\PYZus{}test}\PY{p}{,} \PY{n}{y\PYZus{}train}\PY{p}{,} \PY{n}{y\PYZus{}test} \PY{o}{=} \PY{n}{train\PYZus{}test\PYZus{}split}\PY{p}{(}
+    \PY{n}{X}\PY{p}{,} \PY{n}{y}\PY{p}{,} \PY{n}{test\PYZus{}size}\PY{o}{=}\PY{l+m+mf}{0.2}\PY{p}{,} \PY{n}{random\PYZus{}state}\PY{o}{=}\PY{l+m+mi}{42}\PY{p}{,} \PY{n}{stratify}\PY{o}{=}\PY{n}{y}
+\PY{p}{)}
+
+\PY{n}{smote} \PY{o}{=} \PY{n}{SMOTE}\PY{p}{(}\PY{n}{random\PYZus{}state}\PY{o}{=}\PY{l+m+mi}{42}\PY{p}{)}
+\PY{n}{X\PYZus{}train\PYZus{}sm}\PY{p}{,} \PY{n}{y\PYZus{}train\PYZus{}sm} \PY{o}{=} \PY{n}{smote}\PY{o}{.}\PY{n}{fit\PYZus{}resample}\PY{p}{(}\PY{n}{X\PYZus{}train}\PY{p}{,} \PY{n}{y\PYZus{}train}\PY{p}{)}
+\end{Verbatim}
+\end{tcolorbox}
+
+    \begin{tcolorbox}[breakable, size=fbox, boxrule=1pt, pad at break*=1mm,colback=cellbackground, colframe=cellborder]
+\prompt{In}{incolor}{11}{\boxspacing}
+\begin{Verbatim}[commandchars=\\\{\}]
+\PY{c+c1}{\PYZsh{} Model Definitions}
+\PY{k+kn}{from}\PY{+w}{ }\PY{n+nn}{sklearn}\PY{n+nn}{.}\PY{n+nn}{linear\PYZus{}model}\PY{+w}{ }\PY{k+kn}{import} \PY{n}{LogisticRegression}
+\PY{k+kn}{from}\PY{+w}{ }\PY{n+nn}{sklearn}\PY{n+nn}{.}\PY{n+nn}{ensemble}\PY{+w}{ }\PY{k+kn}{import} \PY{n}{RandomForestClassifier}
+\PY{k+kn}{from}\PY{+w}{ }\PY{n+nn}{xgboost}\PY{+w}{ }\PY{k+kn}{import} \PY{n}{XGBClassifier}
+\end{Verbatim}
+\end{tcolorbox}
+
+    \begin{tcolorbox}[breakable, size=fbox, boxrule=1pt, pad at break*=1mm,colback=cellbackground, colframe=cellborder]
+\prompt{In}{incolor}{12}{\boxspacing}
+\begin{Verbatim}[commandchars=\\\{\}]
+\PY{c+c1}{\PYZsh{} Hyperparameter Tuning for XGBoost}
+\PY{k+kn}{from}\PY{+w}{ }\PY{n+nn}{sklearn}\PY{n+nn}{.}\PY{n+nn}{model\PYZus{}selection}\PY{+w}{ }\PY{k+kn}{import} \PY{n}{GridSearchCV}
+
+\PY{n}{xgb} \PY{o}{=} \PY{n}{XGBClassifier}\PY{p}{(}\PY{n}{eval\PYZus{}metric}\PY{o}{=}\PY{l+s+s1}{\PYZsq{}}\PY{l+s+s1}{logloss}\PY{l+s+s1}{\PYZsq{}}\PY{p}{,} \PY{n}{random\PYZus{}state}\PY{o}{=}\PY{n}{RANDOM\PYZus{}STATE}\PY{p}{)}
+
+\PY{n}{param\PYZus{}grid} \PY{o}{=} \PY{p}{\PYZob{}}
+    \PY{l+s+s1}{\PYZsq{}}\PY{l+s+s1}{n\PYZus{}estimators}\PY{l+s+s1}{\PYZsq{}}\PY{p}{:} \PY{p}{[}\PY{l+m+mi}{300}\PY{p}{,} \PY{l+m+mi}{500}\PY{p}{]}\PY{p}{,}
+    \PY{l+s+s1}{\PYZsq{}}\PY{l+s+s1}{max\PYZus{}depth}\PY{l+s+s1}{\PYZsq{}}\PY{p}{:} \PY{p}{[}\PY{l+m+mi}{3}\PY{p}{,} \PY{l+m+mi}{4}\PY{p}{]}\PY{p}{,}
+    \PY{l+s+s1}{\PYZsq{}}\PY{l+s+s1}{learning\PYZus{}rate}\PY{l+s+s1}{\PYZsq{}}\PY{p}{:} \PY{p}{[}\PY{l+m+mf}{0.03}\PY{p}{,} \PY{l+m+mf}{0.05}\PY{p}{]}\PY{p}{,}
+    \PY{l+s+s1}{\PYZsq{}}\PY{l+s+s1}{min\PYZus{}child\PYZus{}weight}\PY{l+s+s1}{\PYZsq{}}\PY{p}{:} \PY{p}{[}\PY{l+m+mi}{1}\PY{p}{,} \PY{l+m+mi}{3}\PY{p}{]}\PY{p}{,}
+    \PY{l+s+s1}{\PYZsq{}}\PY{l+s+s1}{gamma}\PY{l+s+s1}{\PYZsq{}}\PY{p}{:} \PY{p}{[}\PY{l+m+mi}{0}\PY{p}{,} \PY{l+m+mf}{0.1}\PY{p}{]}
+\PY{p}{\PYZcb{}}
+
+
+\PY{n}{grid\PYZus{}xgb} \PY{o}{=} \PY{n}{GridSearchCV}\PY{p}{(}
+    \PY{n}{xgb}\PY{p}{,} \PY{n}{param\PYZus{}grid}\PY{p}{,} \PY{n}{scoring}\PY{o}{=}\PY{l+s+s1}{\PYZsq{}}\PY{l+s+s1}{f1}\PY{l+s+s1}{\PYZsq{}}\PY{p}{,} \PY{n}{cv}\PY{o}{=}\PY{l+m+mi}{5}
+\PY{p}{)}
+\PY{n}{grid\PYZus{}xgb}\PY{o}{.}\PY{n}{fit}\PY{p}{(}\PY{n}{X\PYZus{}train\PYZus{}sm}\PY{p}{,} \PY{n}{y\PYZus{}train\PYZus{}sm}\PY{p}{)}
+
+\PY{n}{best\PYZus{}xgb} \PY{o}{=} \PY{n}{grid\PYZus{}xgb}\PY{o}{.}\PY{n}{best\PYZus{}estimator\PYZus{}}
+
+\PY{n}{proba} \PY{o}{=} \PY{n}{best\PYZus{}xgb}\PY{o}{.}\PY{n}{predict\PYZus{}proba}\PY{p}{(}\PY{n}{X\PYZus{}test}\PY{p}{)}\PY{p}{[}\PY{p}{:}\PY{p}{,} \PY{l+m+mi}{1}\PY{p}{]}
+
+\PY{k}{for} \PY{n}{t} \PY{o+ow}{in} \PY{n}{np}\PY{o}{.}\PY{n}{arange}\PY{p}{(}\PY{l+m+mf}{0.3}\PY{p}{,} \PY{l+m+mf}{0.7}\PY{p}{,} \PY{l+m+mf}{0.05}\PY{p}{)}\PY{p}{:}
+    \PY{n}{preds} \PY{o}{=} \PY{p}{(}\PY{n}{proba} \PY{o}{\PYZgt{}} \PY{n}{t}\PY{p}{)}\PY{o}{.}\PY{n}{astype}\PY{p}{(}\PY{n+nb}{int}\PY{p}{)}
+\end{Verbatim}
+\end{tcolorbox}
+
+    \begin{tcolorbox}[breakable, size=fbox, boxrule=1pt, pad at break*=1mm,colback=cellbackground, colframe=cellborder]
+\prompt{In}{incolor}{13}{\boxspacing}
+\begin{Verbatim}[commandchars=\\\{\}]
+\PY{c+c1}{\PYZsh{} Hyperparameter Tuning for RandomForest}
+\PY{k+kn}{from}\PY{+w}{ }\PY{n+nn}{sklearn}\PY{n+nn}{.}\PY{n+nn}{ensemble}\PY{+w}{ }\PY{k+kn}{import} \PY{n}{RandomForestClassifier}
+\PY{k+kn}{from}\PY{+w}{ }\PY{n+nn}{sklearn}\PY{n+nn}{.}\PY{n+nn}{model\PYZus{}selection}\PY{+w}{ }\PY{k+kn}{import} \PY{n}{GridSearchCV}
+
+\PY{n}{rf} \PY{o}{=} \PY{n}{RandomForestClassifier}\PY{p}{(}
+    \PY{n}{random\PYZus{}state}\PY{o}{=}\PY{n}{RANDOM\PYZus{}STATE}\PY{p}{,}
+    \PY{n}{class\PYZus{}weight}\PY{o}{=}\PY{l+s+s2}{\PYZdq{}}\PY{l+s+s2}{balanced}\PY{l+s+s2}{\PYZdq{}}\PY{p}{,}
+    \PY{n}{n\PYZus{}jobs}\PY{o}{=}\PY{o}{\PYZhy{}}\PY{l+m+mi}{1}
+\PY{p}{)}
+
+\PY{n}{param\PYZus{}grid} \PY{o}{=} \PY{p}{\PYZob{}}
+    \PY{l+s+s1}{\PYZsq{}}\PY{l+s+s1}{n\PYZus{}estimators}\PY{l+s+s1}{\PYZsq{}}\PY{p}{:} \PY{p}{[}\PY{l+m+mi}{300}\PY{p}{,} \PY{l+m+mi}{500}\PY{p}{]}\PY{p}{,}
+    \PY{l+s+s1}{\PYZsq{}}\PY{l+s+s1}{max\PYZus{}depth}\PY{l+s+s1}{\PYZsq{}}\PY{p}{:} \PY{p}{[}\PY{k+kc}{None}\PY{p}{,} \PY{l+m+mi}{10}\PY{p}{,} \PY{l+m+mi}{20}\PY{p}{]}\PY{p}{,}
+    \PY{l+s+s1}{\PYZsq{}}\PY{l+s+s1}{min\PYZus{}samples\PYZus{}split}\PY{l+s+s1}{\PYZsq{}}\PY{p}{:} \PY{p}{[}\PY{l+m+mi}{2}\PY{p}{,} \PY{l+m+mi}{5}\PY{p}{,} \PY{l+m+mi}{10}\PY{p}{]}\PY{p}{,}
+    \PY{l+s+s1}{\PYZsq{}}\PY{l+s+s1}{min\PYZus{}samples\PYZus{}leaf}\PY{l+s+s1}{\PYZsq{}}\PY{p}{:} \PY{p}{[}\PY{l+m+mi}{1}\PY{p}{,} \PY{l+m+mi}{2}\PY{p}{,} \PY{l+m+mi}{4}\PY{p}{]}\PY{p}{,}
+    \PY{l+s+s1}{\PYZsq{}}\PY{l+s+s1}{max\PYZus{}features}\PY{l+s+s1}{\PYZsq{}}\PY{p}{:} \PY{p}{[}\PY{l+s+s1}{\PYZsq{}}\PY{l+s+s1}{sqrt}\PY{l+s+s1}{\PYZsq{}}\PY{p}{,} \PY{l+s+s1}{\PYZsq{}}\PY{l+s+s1}{log2}\PY{l+s+s1}{\PYZsq{}}\PY{p}{]}
+\PY{p}{\PYZcb{}}
+
+\PY{n}{grid\PYZus{}rf} \PY{o}{=} \PY{n}{GridSearchCV}\PY{p}{(}
+    \PY{n}{estimator}\PY{o}{=}\PY{n}{rf}\PY{p}{,}
+    \PY{n}{param\PYZus{}grid}\PY{o}{=}\PY{n}{param\PYZus{}grid}\PY{p}{,}
+    \PY{n}{scoring}\PY{o}{=}\PY{l+s+s1}{\PYZsq{}}\PY{l+s+s1}{f1}\PY{l+s+s1}{\PYZsq{}}\PY{p}{,}
+    \PY{n}{cv}\PY{o}{=}\PY{l+m+mi}{5}\PY{p}{,}
+    \PY{n}{n\PYZus{}jobs}\PY{o}{=}\PY{o}{\PYZhy{}}\PY{l+m+mi}{1}\PY{p}{,}
+    \PY{n}{verbose}\PY{o}{=}\PY{l+m+mi}{1}
+\PY{p}{)}
+
+\PY{n}{grid\PYZus{}rf}\PY{o}{.}\PY{n}{fit}\PY{p}{(}\PY{n}{X\PYZus{}train\PYZus{}sm}\PY{p}{,} \PY{n}{y\PYZus{}train\PYZus{}sm}\PY{p}{)}
+
+\PY{n}{best\PYZus{}rf} \PY{o}{=} \PY{n}{grid\PYZus{}rf}\PY{o}{.}\PY{n}{best\PYZus{}estimator\PYZus{}}
+\end{Verbatim}
+\end{tcolorbox}
+
+    \begin{Verbatim}[commandchars=\\\{\}]
+Fitting 5 folds for each of 108 candidates, totalling 540 fits
+    \end{Verbatim}
+
+    \begin{tcolorbox}[breakable, size=fbox, boxrule=1pt, pad at break*=1mm,colback=cellbackground, colframe=cellborder]
+\prompt{In}{incolor}{14}{\boxspacing}
+\begin{Verbatim}[commandchars=\\\{\}]
+\PY{c+c1}{\PYZsh{} Logistic Regression with Hyperparameter Tuning}
+
+\PY{k+kn}{from}\PY{+w}{ }\PY{n+nn}{sklearn}\PY{n+nn}{.}\PY{n+nn}{pipeline}\PY{+w}{ }\PY{k+kn}{import} \PY{n}{Pipeline}
+\PY{k+kn}{from}\PY{+w}{ }\PY{n+nn}{sklearn}\PY{n+nn}{.}\PY{n+nn}{preprocessing}\PY{+w}{ }\PY{k+kn}{import} \PY{n}{StandardScaler}
+\PY{k+kn}{from}\PY{+w}{ }\PY{n+nn}{sklearn}\PY{n+nn}{.}\PY{n+nn}{linear\PYZus{}model}\PY{+w}{ }\PY{k+kn}{import} \PY{n}{LogisticRegression}
+\PY{k+kn}{from}\PY{+w}{ }\PY{n+nn}{sklearn}\PY{n+nn}{.}\PY{n+nn}{model\PYZus{}selection}\PY{+w}{ }\PY{k+kn}{import} \PY{n}{GridSearchCV}
+
+
+\PY{c+c1}{\PYZsh{} Pipeline: Scaling + Logistic Regression}
+\PY{n}{lr\PYZus{}pipeline} \PY{o}{=} \PY{n}{Pipeline}\PY{p}{(}\PY{n}{steps}\PY{o}{=}\PY{p}{[}
+    \PY{p}{(}\PY{l+s+s1}{\PYZsq{}}\PY{l+s+s1}{scaler}\PY{l+s+s1}{\PYZsq{}}\PY{p}{,} \PY{n}{StandardScaler}\PY{p}{(}\PY{p}{)}\PY{p}{)}\PY{p}{,}
+    \PY{p}{(}\PY{l+s+s1}{\PYZsq{}}\PY{l+s+s1}{lr}\PY{l+s+s1}{\PYZsq{}}\PY{p}{,} \PY{n}{LogisticRegression}\PY{p}{(}
+        \PY{n}{random\PYZus{}state}\PY{o}{=}\PY{n}{RANDOM\PYZus{}STATE}\PY{p}{,}
+        \PY{n}{max\PYZus{}iter}\PY{o}{=}\PY{l+m+mi}{500}\PY{p}{,}
+        \PY{n}{class\PYZus{}weight}\PY{o}{=}\PY{l+s+s1}{\PYZsq{}}\PY{l+s+s1}{balanced}\PY{l+s+s1}{\PYZsq{}}
+    \PY{p}{)}\PY{p}{)}
+\PY{p}{]}\PY{p}{)}
+
+
+\PY{c+c1}{\PYZsh{} Hyperparameter grid}
+\PY{n}{param\PYZus{}grid\PYZus{}lr} \PY{o}{=} \PY{p}{\PYZob{}}
+    \PY{l+s+s1}{\PYZsq{}}\PY{l+s+s1}{lr\PYZus{}\PYZus{}penalty}\PY{l+s+s1}{\PYZsq{}}\PY{p}{:} \PY{p}{[}\PY{l+s+s1}{\PYZsq{}}\PY{l+s+s1}{l1}\PY{l+s+s1}{\PYZsq{}}\PY{p}{,} \PY{l+s+s1}{\PYZsq{}}\PY{l+s+s1}{l2}\PY{l+s+s1}{\PYZsq{}}\PY{p}{]}\PY{p}{,}
+    \PY{l+s+s1}{\PYZsq{}}\PY{l+s+s1}{lr\PYZus{}\PYZus{}C}\PY{l+s+s1}{\PYZsq{}}\PY{p}{:} \PY{p}{[}\PY{l+m+mf}{0.1}\PY{p}{,} \PY{l+m+mf}{0.5}\PY{p}{,} \PY{l+m+mi}{1}\PY{p}{,} \PY{l+m+mi}{2}\PY{p}{,} \PY{l+m+mi}{5}\PY{p}{,} \PY{l+m+mi}{10}\PY{p}{]}\PY{p}{,}
+    \PY{l+s+s1}{\PYZsq{}}\PY{l+s+s1}{lr\PYZus{}\PYZus{}solver}\PY{l+s+s1}{\PYZsq{}}\PY{p}{:} \PY{p}{[}\PY{l+s+s1}{\PYZsq{}}\PY{l+s+s1}{liblinear}\PY{l+s+s1}{\PYZsq{}}\PY{p}{]}\PY{p}{,}  \PY{c+c1}{\PYZsh{} supports l1 + l2}
+\PY{p}{\PYZcb{}}
+
+
+\PY{c+c1}{\PYZsh{} GridSearchCV}
+\PY{n}{grid\PYZus{}lr} \PY{o}{=} \PY{n}{GridSearchCV}\PY{p}{(}
+    \PY{n}{lr\PYZus{}pipeline}\PY{p}{,}
+    \PY{n}{param\PYZus{}grid\PYZus{}lr}\PY{p}{,}
+    \PY{n}{scoring}\PY{o}{=}\PY{l+s+s1}{\PYZsq{}}\PY{l+s+s1}{f1}\PY{l+s+s1}{\PYZsq{}}\PY{p}{,}
+    \PY{n}{cv}\PY{o}{=}\PY{l+m+mi}{5}\PY{p}{,}
+    \PY{n}{n\PYZus{}jobs}\PY{o}{=}\PY{o}{\PYZhy{}}\PY{l+m+mi}{1}
+\PY{p}{)}
+
+\PY{n}{grid\PYZus{}lr}\PY{o}{.}\PY{n}{fit}\PY{p}{(}\PY{n}{X\PYZus{}train}\PY{p}{,} \PY{n}{y\PYZus{}train}\PY{p}{)}
+
+
+\PY{c+c1}{\PYZsh{} Train using SMOTE\PYZhy{}balanced training data}
+\PY{n}{grid\PYZus{}lr}\PY{o}{.}\PY{n}{fit}\PY{p}{(}\PY{n}{X\PYZus{}train\PYZus{}sm}\PY{p}{,} \PY{n}{y\PYZus{}train\PYZus{}sm}\PY{p}{)}
+
+\PY{n}{best\PYZus{}lr} \PY{o}{=} \PY{n}{grid\PYZus{}lr}\PY{o}{.}\PY{n}{best\PYZus{}estimator\PYZus{}}
+
+\PY{n}{y\PYZus{}pred\PYZus{}lr} \PY{o}{=} \PY{n}{best\PYZus{}lr}\PY{o}{.}\PY{n}{predict}\PY{p}{(}\PY{n}{X\PYZus{}test}\PY{p}{)}
+
+\PY{k+kn}{from}\PY{+w}{ }\PY{n+nn}{sklearn}\PY{n+nn}{.}\PY{n+nn}{metrics}\PY{+w}{ }\PY{k+kn}{import} \PY{n}{accuracy\PYZus{}score}\PY{p}{,} \PY{n}{f1\PYZus{}score}
+
+\PY{n}{lr\PYZus{}accuracy} \PY{o}{=} \PY{n}{accuracy\PYZus{}score}\PY{p}{(}\PY{n}{y\PYZus{}test}\PY{p}{,} \PY{n}{y\PYZus{}pred\PYZus{}lr}\PY{p}{)}
+\PY{n}{lr\PYZus{}f1} \PY{o}{=} \PY{n}{f1\PYZus{}score}\PY{p}{(}\PY{n}{y\PYZus{}test}\PY{p}{,} \PY{n}{y\PYZus{}pred\PYZus{}lr}\PY{p}{)}
+
+\PY{n+nb}{print}\PY{p}{(}\PY{l+s+s2}{\PYZdq{}}\PY{l+s+s2}{Best LR Params:}\PY{l+s+s2}{\PYZdq{}}\PY{p}{,} \PY{n}{grid\PYZus{}lr}\PY{o}{.}\PY{n}{best\PYZus{}params\PYZus{}}\PY{p}{)}
+\PY{n+nb}{print}\PY{p}{(}\PY{l+s+s2}{\PYZdq{}}\PY{l+s+s2}{LR Accuracy:}\PY{l+s+s2}{\PYZdq{}}\PY{p}{,} \PY{n}{lr\PYZus{}accuracy}\PY{p}{)}
+\PY{n+nb}{print}\PY{p}{(}\PY{l+s+s2}{\PYZdq{}}\PY{l+s+s2}{LR F1 Score:}\PY{l+s+s2}{\PYZdq{}}\PY{p}{,} \PY{n}{lr\PYZus{}f1}\PY{p}{)}
+\end{Verbatim}
+\end{tcolorbox}
+
+    \begin{Verbatim}[commandchars=\\\{\}]
+Best LR Params: \{'lr\_\_C': 0.1, 'lr\_\_penalty': 'l1', 'lr\_\_solver': 'liblinear'\}
+LR Accuracy: 0.8354430379746836
+LR F1 Score: 0.8631578947368421
+    \end{Verbatim}
+
+    \begin{tcolorbox}[breakable, size=fbox, boxrule=1pt, pad at break*=1mm,colback=cellbackground, colframe=cellborder]
+\prompt{In}{incolor}{15}{\boxspacing}
+\begin{Verbatim}[commandchars=\\\{\}]
+\PY{c+c1}{\PYZsh{} SHAP for Logistic Regression (Linear model)}
+
+\PY{n}{explainer\PYZus{}lr} \PY{o}{=} \PY{n}{shap}\PY{o}{.}\PY{n}{LinearExplainer}\PY{p}{(}
+    \PY{n}{best\PYZus{}lr}\PY{o}{.}\PY{n}{named\PYZus{}steps}\PY{p}{[}\PY{l+s+s1}{\PYZsq{}}\PY{l+s+s1}{lr}\PY{l+s+s1}{\PYZsq{}}\PY{p}{]}\PY{p}{,}
+    \PY{n}{best\PYZus{}lr}\PY{o}{.}\PY{n}{named\PYZus{}steps}\PY{p}{[}\PY{l+s+s1}{\PYZsq{}}\PY{l+s+s1}{scaler}\PY{l+s+s1}{\PYZsq{}}\PY{p}{]}\PY{o}{.}\PY{n}{transform}\PY{p}{(}\PY{n}{X\PYZus{}train}\PY{p}{)}\PY{p}{,}
+    \PY{n}{feature\PYZus{}perturbation}\PY{o}{=}\PY{l+s+s2}{\PYZdq{}}\PY{l+s+s2}{interventional}\PY{l+s+s2}{\PYZdq{}}
+\PY{p}{)}
+
+\PY{n}{X\PYZus{}test\PYZus{}scaled} \PY{o}{=} \PY{n}{best\PYZus{}lr}\PY{o}{.}\PY{n}{named\PYZus{}steps}\PY{p}{[}\PY{l+s+s1}{\PYZsq{}}\PY{l+s+s1}{scaler}\PY{l+s+s1}{\PYZsq{}}\PY{p}{]}\PY{o}{.}\PY{n}{transform}\PY{p}{(}\PY{n}{X\PYZus{}test}\PY{p}{)}
+
+\PY{n}{shap\PYZus{}values\PYZus{}lr} \PY{o}{=} \PY{n}{explainer\PYZus{}lr}\PY{o}{.}\PY{n}{shap\PYZus{}values}\PY{p}{(}\PY{n}{X\PYZus{}test\PYZus{}scaled}\PY{p}{)}
+
+\PY{n}{shap}\PY{o}{.}\PY{n}{summary\PYZus{}plot}\PY{p}{(}
+    \PY{n}{shap\PYZus{}values\PYZus{}lr}\PY{p}{,}
+    \PY{n}{X\PYZus{}test}\PY{p}{,}
+    \PY{n}{feature\PYZus{}names}\PY{o}{=}\PY{n}{X\PYZus{}test}\PY{o}{.}\PY{n}{columns}\PY{p}{,}
+    \PY{n}{show}\PY{o}{=}\PY{k+kc}{True}
+\PY{p}{)}
+\end{Verbatim}
+\end{tcolorbox}
+
+    \begin{center}
+    \adjustimage{max size={0.9\linewidth}{0.9\paperheight}}{output_16_0.png}
+    \end{center}
+    { \hspace*{\fill} \\}
+    
+    \begin{tcolorbox}[breakable, size=fbox, boxrule=1pt, pad at break*=1mm,colback=cellbackground, colframe=cellborder]
+\prompt{In}{incolor}{16}{\boxspacing}
+\begin{Verbatim}[commandchars=\\\{\}]
+\PY{c+c1}{\PYZsh{} Force plot for Logistic Regression (single student)}
+\PY{c+c1}{\PYZsh{} change index to analyze different students}
+\PY{n}{index} \PY{o}{=} \PY{l+m+mi}{5}
+
+\PY{n}{shap}\PY{o}{.}\PY{n}{force\PYZus{}plot}\PY{p}{(}
+    \PY{n}{explainer\PYZus{}lr}\PY{o}{.}\PY{n}{expected\PYZus{}value}\PY{p}{,}
+    \PY{n}{shap\PYZus{}values\PYZus{}lr}\PY{p}{[}\PY{n}{index}\PY{p}{]}\PY{p}{,}
+    \PY{n}{X\PYZus{}test}\PY{o}{.}\PY{n}{iloc}\PY{p}{[}\PY{n}{index}\PY{p}{]}\PY{p}{,}
+    \PY{n}{feature\PYZus{}names}\PY{o}{=}\PY{n}{X\PYZus{}test}\PY{o}{.}\PY{n}{columns}
+\PY{p}{)}
+\end{Verbatim}
+\end{tcolorbox}
+
+            \begin{tcolorbox}[breakable, size=fbox, boxrule=.5pt, pad at break*=1mm, opacityfill=0]
+\prompt{Out}{outcolor}{16}{\boxspacing}
+\begin{Verbatim}[commandchars=\\\{\}]
+<shap.plots.\_force.AdditiveForceVisualizer at 0x7f1b085d4590>
+\end{Verbatim}
+\end{tcolorbox}
+        
+    \begin{tcolorbox}[breakable, size=fbox, boxrule=1pt, pad at break*=1mm,colback=cellbackground, colframe=cellborder]
+\prompt{In}{incolor}{17}{\boxspacing}
+\begin{Verbatim}[commandchars=\\\{\}]
+\PY{c+c1}{\PYZsh{} SHAP for Random Forest (Tree\PYZhy{}based)}
+
+\PY{n}{explainer\PYZus{}rf} \PY{o}{=} \PY{n}{shap}\PY{o}{.}\PY{n}{TreeExplainer}\PY{p}{(}\PY{n}{best\PYZus{}rf}\PY{p}{)}
+\PY{n}{shap\PYZus{}values\PYZus{}rf} \PY{o}{=} \PY{n}{explainer\PYZus{}rf}\PY{o}{.}\PY{n}{shap\PYZus{}values}\PY{p}{(}\PY{n}{X\PYZus{}test}\PY{p}{)}
+
+\PY{n}{shap}\PY{o}{.}\PY{n}{summary\PYZus{}plot}\PY{p}{(}
+    \PY{n}{shap\PYZus{}values\PYZus{}rf}\PY{p}{,}  
+    \PY{n}{X\PYZus{}test}\PY{p}{,}
+    \PY{n}{feature\PYZus{}names}\PY{o}{=}\PY{n}{X\PYZus{}test}\PY{o}{.}\PY{n}{columns}\PY{p}{,}
+    \PY{n}{show}\PY{o}{=}\PY{k+kc}{True}
+\PY{p}{)}
+\end{Verbatim}
+\end{tcolorbox}
+
+    \begin{center}
+    \adjustimage{max size={0.9\linewidth}{0.9\paperheight}}{output_18_0.png}
+    \end{center}
+    { \hspace*{\fill} \\}
+    
+    \subsubsection{For this student, high past grades increased success
+probability, while low family support decreased
+it.}\label{for-this-student-high-past-grades-increased-success-probability-while-low-family-support-decreased-it.}
+
+    \begin{tcolorbox}[breakable, size=fbox, boxrule=1pt, pad at break*=1mm,colback=cellbackground, colframe=cellborder]
+\prompt{In}{incolor}{18}{\boxspacing}
+\begin{Verbatim}[commandchars=\\\{\}]
+\PY{c+c1}{\PYZsh{} Force plot for XGBoost}
+
+\PY{n}{explainer\PYZus{}xgb} \PY{o}{=} \PY{n}{shap}\PY{o}{.}\PY{n}{TreeExplainer}\PY{p}{(}\PY{n}{best\PYZus{}xgb}\PY{p}{)}
+\PY{n}{shap\PYZus{}values\PYZus{}xgb} \PY{o}{=} \PY{n}{explainer\PYZus{}xgb}\PY{o}{.}\PY{n}{shap\PYZus{}values}\PY{p}{(}\PY{n}{X\PYZus{}test}\PY{p}{)}
+
+\PY{n}{shap}\PY{o}{.}\PY{n}{force\PYZus{}plot}\PY{p}{(}
+    \PY{n}{explainer\PYZus{}xgb}\PY{o}{.}\PY{n}{expected\PYZus{}value}\PY{p}{,}
+    \PY{n}{shap\PYZus{}values\PYZus{}xgb}\PY{p}{[}\PY{n}{index}\PY{p}{]}\PY{p}{,}
+    \PY{n}{X\PYZus{}test}\PY{o}{.}\PY{n}{iloc}\PY{p}{[}\PY{n}{index}\PY{p}{]}\PY{p}{,}
+    \PY{n}{feature\PYZus{}names}\PY{o}{=}\PY{n}{X\PYZus{}test}\PY{o}{.}\PY{n}{columns}
+\PY{p}{)}
+\end{Verbatim}
+\end{tcolorbox}
+
+            \begin{tcolorbox}[breakable, size=fbox, boxrule=.5pt, pad at break*=1mm, opacityfill=0]
+\prompt{Out}{outcolor}{18}{\boxspacing}
+\begin{Verbatim}[commandchars=\\\{\}]
+<shap.plots.\_force.AdditiveForceVisualizer at 0x7f1b0826db90>
+\end{Verbatim}
+\end{tcolorbox}
+        
+    \begin{tcolorbox}[breakable, size=fbox, boxrule=1pt, pad at break*=1mm,colback=cellbackground, colframe=cellborder]
+\prompt{In}{incolor}{19}{\boxspacing}
+\begin{Verbatim}[commandchars=\\\{\}]
+\PY{c+c1}{\PYZsh{} Model Evaluation}
+\PY{k+kn}{from}\PY{+w}{ }\PY{n+nn}{sklearn}\PY{n+nn}{.}\PY{n+nn}{metrics}\PY{+w}{ }\PY{k+kn}{import} \PY{n}{accuracy\PYZus{}score}\PY{p}{,} \PY{n}{f1\PYZus{}score}
+
+\PY{k}{def}\PY{+w}{ }\PY{n+nf}{evaluate}\PY{p}{(}\PY{n}{model}\PY{p}{,} \PY{n}{X\PYZus{}test}\PY{p}{,} \PY{n}{y\PYZus{}test}\PY{p}{)}\PY{p}{:}
+    \PY{n}{y\PYZus{}pred} \PY{o}{=} \PY{n}{model}\PY{o}{.}\PY{n}{predict}\PY{p}{(}\PY{n}{X\PYZus{}test}\PY{p}{)}
+    \PY{k}{return} \PY{p}{\PYZob{}}
+        \PY{l+s+s2}{\PYZdq{}}\PY{l+s+s2}{Accuracy}\PY{l+s+s2}{\PYZdq{}}\PY{p}{:} \PY{n}{accuracy\PYZus{}score}\PY{p}{(}\PY{n}{y\PYZus{}test}\PY{p}{,} \PY{n}{y\PYZus{}pred}\PY{p}{)}\PY{p}{,}
+        \PY{l+s+s2}{\PYZdq{}}\PY{l+s+s2}{F1 Score}\PY{l+s+s2}{\PYZdq{}}\PY{p}{:} \PY{n}{f1\PYZus{}score}\PY{p}{(}\PY{n}{y\PYZus{}test}\PY{p}{,} \PY{n}{y\PYZus{}pred}\PY{p}{)}
+    \PY{p}{\PYZcb{}}
+
+\PY{n}{results} \PY{o}{=} \PY{p}{\PYZob{}}\PY{p}{\PYZcb{}}
+\PY{n}{results}\PY{p}{[}\PY{l+s+s1}{\PYZsq{}}\PY{l+s+s1}{XGBoost}\PY{l+s+s1}{\PYZsq{}}\PY{p}{]} \PY{o}{=} \PY{n}{evaluate}\PY{p}{(}\PY{n}{best\PYZus{}xgb}\PY{p}{,} \PY{n}{X\PYZus{}test}\PY{p}{,} \PY{n}{y\PYZus{}test}\PY{p}{)}
+\PY{n}{results}\PY{p}{[}\PY{l+s+s1}{\PYZsq{}}\PY{l+s+s1}{RandomForest}\PY{l+s+s1}{\PYZsq{}}\PY{p}{]} \PY{o}{=} \PY{n}{evaluate}\PY{p}{(}\PY{n}{best\PYZus{}rf}\PY{p}{,} \PY{n}{X\PYZus{}test}\PY{p}{,} \PY{n}{y\PYZus{}test}\PY{p}{)}
+\PY{n}{results}\PY{p}{[}\PY{l+s+s1}{\PYZsq{}}\PY{l+s+s1}{LogisticRegression}\PY{l+s+s1}{\PYZsq{}}\PY{p}{]} \PY{o}{=} \PY{n}{evaluate}\PY{p}{(}\PY{n}{best\PYZus{}lr}\PY{p}{,} \PY{n}{X\PYZus{}test}\PY{p}{,} \PY{n}{y\PYZus{}test}\PY{p}{)}
+
+\PY{c+c1}{\PYZsh{} Print model performance}
+\PY{k}{for} \PY{n}{name}\PY{p}{,} \PY{n}{metrics} \PY{o+ow}{in} \PY{n}{results}\PY{o}{.}\PY{n}{items}\PY{p}{(}\PY{p}{)}\PY{p}{:}
+    \PY{n+nb}{print}\PY{p}{(}\PY{l+s+sa}{f}\PY{l+s+s2}{\PYZdq{}}\PY{l+s+si}{\PYZob{}}\PY{n}{name}\PY{l+s+si}{\PYZcb{}}\PY{l+s+s2}{ \PYZhy{} Accuracy: }\PY{l+s+si}{\PYZob{}}\PY{n}{metrics}\PY{p}{[}\PY{l+s+s1}{\PYZsq{}}\PY{l+s+s1}{Accuracy}\PY{l+s+s1}{\PYZsq{}}\PY{p}{]}\PY{l+s+si}{:}\PY{l+s+s2}{.3f}\PY{l+s+si}{\PYZcb{}}\PY{l+s+s2}{, F1 Score: }\PY{l+s+si}{\PYZob{}}\PY{n}{metrics}\PY{p}{[}\PY{l+s+s1}{\PYZsq{}}\PY{l+s+s1}{F1 Score}\PY{l+s+s1}{\PYZsq{}}\PY{p}{]}\PY{l+s+si}{:}\PY{l+s+s2}{.3f}\PY{l+s+si}{\PYZcb{}}\PY{l+s+s2}{\PYZdq{}}\PY{p}{)}
+\end{Verbatim}
+\end{tcolorbox}
+
+    \begin{Verbatim}[commandchars=\\\{\}]
+XGBoost - Accuracy: 0.899, F1 Score: 0.922
+RandomForest - Accuracy: 0.924, F1 Score: 0.942
+LogisticRegression - Accuracy: 0.835, F1 Score: 0.863
+    \end{Verbatim}
+
+    \begin{tcolorbox}[breakable, size=fbox, boxrule=1pt, pad at break*=1mm,colback=cellbackground, colframe=cellborder]
+\prompt{In}{incolor}{20}{\boxspacing}
+\begin{Verbatim}[commandchars=\\\{\}]
+\PY{c+c1}{\PYZsh{} Fairness Analysis [Global Explainability]}
+\PY{c+c1}{\PYZsh{} SHAP for XGBoost}
+
+\PY{n}{explainer\PYZus{}xgb} \PY{o}{=} \PY{n}{shap}\PY{o}{.}\PY{n}{TreeExplainer}\PY{p}{(}\PY{n}{best\PYZus{}xgb}\PY{p}{)}
+\PY{n}{shap\PYZus{}values\PYZus{}xgb} \PY{o}{=} \PY{n}{explainer\PYZus{}xgb}\PY{o}{.}\PY{n}{shap\PYZus{}values}\PY{p}{(}\PY{n}{X\PYZus{}test}\PY{p}{)}
+
+\PY{n}{shap}\PY{o}{.}\PY{n}{summary\PYZus{}plot}\PY{p}{(}
+    \PY{n}{shap\PYZus{}values\PYZus{}xgb}\PY{p}{,}
+    \PY{n}{X\PYZus{}test}\PY{p}{,}
+    \PY{n}{feature\PYZus{}names}\PY{o}{=}\PY{n}{X\PYZus{}test}\PY{o}{.}\PY{n}{columns}\PY{p}{,}
+    \PY{n}{show}\PY{o}{=}\PY{k+kc}{True}
+\PY{p}{)}
+\end{Verbatim}
+\end{tcolorbox}
+
+    \begin{center}
+    \adjustimage{max size={0.9\linewidth}{0.9\paperheight}}{output_22_0.png}
+    \end{center}
+    { \hspace*{\fill} \\}
+    
+    SHAP shows how much each feature pushes the prediction toward pass/fail
+(or class 1/0)
+
+X-axis → SHAP value - Positive → pushes prediction toward class 1 -
+Negative → pushes toward class 0
+
+Y-axis → Features sorted by importance (top = most influential)
+
+\begin{verbatim}
+- Red = high feature value
+- Blue = low feature value
+\end{verbatim}
+
+    \subsubsection{Higher study time (red points on right) strongly
+increases probability of student success, while low attendance (blue
+points on left) decreases
+it.}\label{higher-study-time-red-points-on-right-strongly-increases-probability-of-student-success-while-low-attendance-blue-points-on-left-decreases-it.}
+
+    \begin{tcolorbox}[breakable, size=fbox, boxrule=1pt, pad at break*=1mm,colback=cellbackground, colframe=cellborder]
+\prompt{In}{incolor}{21}{\boxspacing}
+\begin{Verbatim}[commandchars=\\\{\}]
+\PY{c+c1}{\PYZsh{} Local Explainability for XGBoost}
+\PY{n}{idx} \PY{o}{=} \PY{l+m+mi}{5}
+\PY{n}{shap}\PY{o}{.}\PY{n}{plots}\PY{o}{.}\PY{n}{waterfall}\PY{p}{(}
+    \PY{n}{shap}\PY{o}{.}\PY{n}{Explanation}\PY{p}{(}
+        \PY{n}{values}\PY{o}{=}\PY{n}{shap\PYZus{}values\PYZus{}xgb}\PY{p}{[}\PY{n}{idx}\PY{p}{]}\PY{p}{,}
+        \PY{n}{base\PYZus{}values}\PY{o}{=}\PY{n}{explainer\PYZus{}xgb}\PY{o}{.}\PY{n}{expected\PYZus{}value}\PY{p}{,}
+        \PY{n}{data}\PY{o}{=}\PY{n}{X\PYZus{}test}\PY{o}{.}\PY{n}{iloc}\PY{p}{[}\PY{n}{idx}\PY{p}{]}
+    \PY{p}{)}
+\PY{p}{)}
+\end{Verbatim}
+\end{tcolorbox}
+
+    \begin{center}
+    \adjustimage{max size={0.9\linewidth}{0.9\paperheight}}{output_25_0.png}
+    \end{center}
+    { \hspace*{\fill} \\}
+    
+    \begin{tcolorbox}[breakable, size=fbox, boxrule=1pt, pad at break*=1mm,colback=cellbackground, colframe=cellborder]
+\prompt{In}{incolor}{22}{\boxspacing}
+\begin{Verbatim}[commandchars=\\\{\}]
+\PY{c+c1}{\PYZsh{} Error\PYZhy{}Based Explainability}
+\PY{n}{y\PYZus{}pred} \PY{o}{=} \PY{n}{best\PYZus{}xgb}\PY{o}{.}\PY{n}{predict}\PY{p}{(}\PY{n}{X\PYZus{}test}\PY{p}{)}
+\PY{n}{errors} \PY{o}{=} \PY{n}{X\PYZus{}test}\PY{p}{[}\PY{n}{y\PYZus{}pred} \PY{o}{!=} \PY{n}{y\PYZus{}test}\PY{p}{]}
+
+\PY{n}{y\PYZus{}pred}
+\PY{n}{errors}
+\end{Verbatim}
+\end{tcolorbox}
+
+            \begin{tcolorbox}[breakable, size=fbox, boxrule=.5pt, pad at break*=1mm, opacityfill=0]
+\prompt{Out}{outcolor}{22}{\boxspacing}
+\begin{Verbatim}[commandchars=\\\{\}]
+          age  Medu  Fedu  failures  absences        G1        G2  school\_MS  \textbackslash{}
+19  -0.546287     4     3         0 -0.213796 -0.877487 -0.190038      False
+43  -1.330954     2     2         0 -0.714236 -0.877487 -0.722415      False
+394  1.807713     1     1         0 -0.088686 -0.877487 -0.456226       True
+281  0.238380     3     2         1  1.662856  0.027493 -0.456226      False
+2   -1.330954     1     1         3  0.536865 -1.179147 -0.722415      False
+199 -0.546287     4     4         0 -0.714236 -0.575827 -0.456226      False
+78   0.238380     2     1         3 -0.464016 -0.877487 -0.722415      False
+317  1.023046     4     3         0  0.411755 -0.575827 -0.190038      False
+
+     sex\_M  address\_U  famsize\_LE3  Pstatus\_T
+19    True       True         True       True
+43    True       True        False       True
+394   True       True         True       True
+281   True       True         True      False
+2    False       True         True       True
+199  False       True         True       True
+78    True       True        False       True
+317  False       True        False       True
+\end{Verbatim}
+\end{tcolorbox}
+        
+    \begin{tcolorbox}[breakable, size=fbox, boxrule=1pt, pad at break*=1mm,colback=cellbackground, colframe=cellborder]
+\prompt{In}{incolor}{23}{\boxspacing}
+\begin{Verbatim}[commandchars=\\\{\}]
+\PY{c+c1}{\PYZsh{} LIME Explanations}
+
+\PY{k+kn}{from}\PY{+w}{ }\PY{n+nn}{lime}\PY{n+nn}{.}\PY{n+nn}{lime\PYZus{}tabular}\PY{+w}{ }\PY{k+kn}{import} \PY{n}{LimeTabularExplainer}
+
+\PY{n}{models} \PY{o}{=} \PY{p}{\PYZob{}}
+    \PY{l+s+s1}{\PYZsq{}}\PY{l+s+s1}{XGBoost}\PY{l+s+s1}{\PYZsq{}}\PY{p}{:} \PY{n}{best\PYZus{}xgb}\PY{p}{,}
+    \PY{l+s+s1}{\PYZsq{}}\PY{l+s+s1}{RandomForest}\PY{l+s+s1}{\PYZsq{}}\PY{p}{:} \PY{n}{best\PYZus{}rf}
+\PY{p}{\PYZcb{}}
+
+\PY{n}{lime\PYZus{}explainer} \PY{o}{=} \PY{n}{LimeTabularExplainer}\PY{p}{(}
+    \PY{n}{training\PYZus{}data}\PY{o}{=}\PY{n}{X\PYZus{}train}\PY{o}{.}\PY{n}{values}\PY{p}{,}
+    \PY{n}{feature\PYZus{}names}\PY{o}{=}\PY{n}{X\PYZus{}train}\PY{o}{.}\PY{n}{columns}\PY{p}{,}
+    \PY{n}{class\PYZus{}names}\PY{o}{=}\PY{p}{[}\PY{l+s+s1}{\PYZsq{}}\PY{l+s+s1}{Fail}\PY{l+s+s1}{\PYZsq{}}\PY{p}{,} \PY{l+s+s1}{\PYZsq{}}\PY{l+s+s1}{Pass}\PY{l+s+s1}{\PYZsq{}}\PY{p}{]}\PY{p}{,}
+    \PY{n}{mode}\PY{o}{=}\PY{l+s+s1}{\PYZsq{}}\PY{l+s+s1}{classification}\PY{l+s+s1}{\PYZsq{}}\PY{p}{,}
+    \PY{n}{discretize\PYZus{}continuous}\PY{o}{=}\PY{k+kc}{True}
+\PY{p}{)}
+\PY{n}{exp} \PY{o}{=} \PY{n}{lime\PYZus{}explainer}\PY{o}{.}\PY{n}{explain\PYZus{}instance}\PY{p}{(}
+    \PY{n}{X\PYZus{}test}\PY{o}{.}\PY{n}{iloc}\PY{p}{[}\PY{l+m+mi}{0}\PY{p}{]}\PY{o}{.}\PY{n}{values}\PY{p}{,}
+    \PY{n}{models}\PY{p}{[}\PY{l+s+s1}{\PYZsq{}}\PY{l+s+s1}{XGBoost}\PY{l+s+s1}{\PYZsq{}}\PY{p}{]}\PY{o}{.}\PY{n}{predict\PYZus{}proba}\PY{p}{,}
+    \PY{n}{num\PYZus{}features}\PY{o}{=}\PY{l+m+mi}{8}
+\PY{p}{)}
+\PY{n}{exp}\PY{o}{.}\PY{n}{show\PYZus{}in\PYZus{}notebook}\PY{p}{(}\PY{p}{)}
+\end{Verbatim}
+\end{tcolorbox}
+
+    
+    \begin{Verbatim}[commandchars=\\\{\}]
+<IPython.core.display.HTML object>
+    \end{Verbatim}
+
+    
+    \begin{tcolorbox}[breakable, size=fbox, boxrule=1pt, pad at break*=1mm,colback=cellbackground, colframe=cellborder]
+\prompt{In}{incolor}{24}{\boxspacing}
+\begin{Verbatim}[commandchars=\\\{\}]
+\PY{c+c1}{\PYZsh{} PERMUTATION IMPORTANCE — ALL MODELS (COMPARISON)}
+\PY{k+kn}{from}\PY{+w}{ }\PY{n+nn}{sklearn}\PY{n+nn}{.}\PY{n+nn}{inspection}\PY{+w}{ }\PY{k+kn}{import} \PY{n}{permutation\PYZus{}importance}
+
+\PY{k}{def}\PY{+w}{ }\PY{n+nf}{get\PYZus{}permutation\PYZus{}importance}\PY{p}{(}\PY{n}{model}\PY{p}{,} \PY{n}{X}\PY{p}{,} \PY{n}{y}\PY{p}{,} \PY{n}{model\PYZus{}name}\PY{p}{)}\PY{p}{:}
+    \PY{n}{r} \PY{o}{=} \PY{n}{permutation\PYZus{}importance}\PY{p}{(}
+        \PY{n}{model}\PY{p}{,} \PY{n}{X}\PY{p}{,} \PY{n}{y}\PY{p}{,}
+        \PY{n}{n\PYZus{}repeats}\PY{o}{=}\PY{l+m+mi}{10}\PY{p}{,}
+        \PY{n}{random\PYZus{}state}\PY{o}{=}\PY{l+m+mi}{42}\PY{p}{,}
+        \PY{n}{scoring}\PY{o}{=}\PY{l+s+s1}{\PYZsq{}}\PY{l+s+s1}{f1}\PY{l+s+s1}{\PYZsq{}}
+    \PY{p}{)}
+    \PY{k}{return} \PY{n}{pd}\PY{o}{.}\PY{n}{DataFrame}\PY{p}{(}\PY{p}{\PYZob{}}
+        \PY{l+s+s1}{\PYZsq{}}\PY{l+s+s1}{Feature}\PY{l+s+s1}{\PYZsq{}}\PY{p}{:} \PY{n}{X}\PY{o}{.}\PY{n}{columns}\PY{p}{,}
+        \PY{n}{model\PYZus{}name}\PY{p}{:} \PY{n}{r}\PY{o}{.}\PY{n}{importances\PYZus{}mean}
+    \PY{p}{\PYZcb{}}\PY{p}{)}
+
+\PY{n}{pi\PYZus{}lr} \PY{o}{=} \PY{n}{get\PYZus{}permutation\PYZus{}importance}\PY{p}{(}\PY{n}{best\PYZus{}lr}\PY{p}{,} \PY{n}{X\PYZus{}test}\PY{p}{,} \PY{n}{y\PYZus{}test}\PY{p}{,} \PY{l+s+s1}{\PYZsq{}}\PY{l+s+s1}{Logistic Regression}\PY{l+s+s1}{\PYZsq{}}\PY{p}{)}
+\PY{n}{pi\PYZus{}rf} \PY{o}{=} \PY{n}{get\PYZus{}permutation\PYZus{}importance}\PY{p}{(}\PY{n}{best\PYZus{}rf}\PY{p}{,} \PY{n}{X\PYZus{}test}\PY{p}{,} \PY{n}{y\PYZus{}test}\PY{p}{,} \PY{l+s+s1}{\PYZsq{}}\PY{l+s+s1}{Random Forest}\PY{l+s+s1}{\PYZsq{}}\PY{p}{)}
+\PY{n}{pi\PYZus{}xgb} \PY{o}{=} \PY{n}{get\PYZus{}permutation\PYZus{}importance}\PY{p}{(}\PY{n}{best\PYZus{}xgb}\PY{p}{,} \PY{n}{X\PYZus{}test}\PY{p}{,} \PY{n}{y\PYZus{}test}\PY{p}{,} \PY{l+s+s1}{\PYZsq{}}\PY{l+s+s1}{XGBoost}\PY{l+s+s1}{\PYZsq{}}\PY{p}{)}
+\end{Verbatim}
+\end{tcolorbox}
+
+    \begin{tcolorbox}[breakable, size=fbox, boxrule=1pt, pad at break*=1mm,colback=cellbackground, colframe=cellborder]
+\prompt{In}{incolor}{25}{\boxspacing}
+\begin{Verbatim}[commandchars=\\\{\}]
+\PY{n}{perm\PYZus{}importance\PYZus{}df} \PY{o}{=} \PY{n}{pi\PYZus{}lr}\PY{o}{.}\PY{n}{merge}\PY{p}{(}\PY{n}{pi\PYZus{}rf}\PY{p}{,} \PY{n}{on}\PY{o}{=}\PY{l+s+s1}{\PYZsq{}}\PY{l+s+s1}{Feature}\PY{l+s+s1}{\PYZsq{}}\PY{p}{)} \PYZbs{}
+                          \PY{o}{.}\PY{n}{merge}\PY{p}{(}\PY{n}{pi\PYZus{}xgb}\PY{p}{,} \PY{n}{on}\PY{o}{=}\PY{l+s+s1}{\PYZsq{}}\PY{l+s+s1}{Feature}\PY{l+s+s1}{\PYZsq{}}\PY{p}{)}
+
+\PY{n}{perm\PYZus{}importance\PYZus{}df} \PY{o}{=} \PY{n}{perm\PYZus{}importance\PYZus{}df}\PY{o}{.}\PY{n}{sort\PYZus{}values}\PY{p}{(}
+    \PY{n}{by}\PY{o}{=}\PY{l+s+s1}{\PYZsq{}}\PY{l+s+s1}{XGBoost}\PY{l+s+s1}{\PYZsq{}}\PY{p}{,} \PY{n}{ascending}\PY{o}{=}\PY{k+kc}{False}
+\PY{p}{)}
+
+\PY{n}{perm\PYZus{}importance\PYZus{}df}
+\end{Verbatim}
+\end{tcolorbox}
+
+            \begin{tcolorbox}[breakable, size=fbox, boxrule=.5pt, pad at break*=1mm, opacityfill=0]
+\prompt{Out}{outcolor}{25}{\boxspacing}
+\begin{Verbatim}[commandchars=\\\{\}]
+        Feature  Logistic Regression  Random Forest   XGBoost
+6            G2             0.204705       0.239971  0.251989
+2          Fedu             0.000000       0.021176  0.018628
+0           age             0.000000       0.010289  0.011767
+1          Medu             0.000000       0.018790  0.009674
+8         sex\_M             0.000000       0.014457  0.008542
+9     address\_U             0.000000       0.011316  0.008369
+5            G1            -0.026431       0.048211  0.005413
+4      absences             0.000000       0.024051  0.003196
+3      failures             0.000000       0.004447  0.000000
+7     school\_MS             0.000000       0.000000  0.000000
+11    Pstatus\_T             0.000000       0.000000  0.000000
+10  famsize\_LE3             0.003590       0.014539 -0.007329
+\end{Verbatim}
+\end{tcolorbox}
+        
+    \begin{tcolorbox}[breakable, size=fbox, boxrule=1pt, pad at break*=1mm,colback=cellbackground, colframe=cellborder]
+\prompt{In}{incolor}{26}{\boxspacing}
+\begin{Verbatim}[commandchars=\\\{\}]
+\PY{c+c1}{\PYZsh{} Accuracy for All Models}
+\PY{k+kn}{from}\PY{+w}{ }\PY{n+nn}{sklearn}\PY{n+nn}{.}\PY{n+nn}{metrics}\PY{+w}{ }\PY{k+kn}{import} \PY{n}{accuracy\PYZus{}score}\PY{p}{,} \PY{n}{precision\PYZus{}score}\PY{p}{,} \PY{n}{recall\PYZus{}score}\PY{p}{,} \PY{n}{f1\PYZus{}score}
+\PY{k+kn}{import}\PY{+w}{ }\PY{n+nn}{pandas}\PY{+w}{ }\PY{k}{as}\PY{+w}{ }\PY{n+nn}{pd}
+
+\PY{c+c1}{\PYZsh{} \PYZhy{}\PYZhy{}\PYZhy{}\PYZhy{}\PYZhy{}\PYZhy{}\PYZhy{}\PYZhy{}\PYZhy{}\PYZhy{}\PYZhy{}\PYZhy{}\PYZhy{}\PYZhy{}\PYZhy{}\PYZhy{}\PYZhy{}\PYZhy{}\PYZhy{}\PYZhy{}\PYZhy{}\PYZhy{}\PYZhy{}\PYZhy{}\PYZhy{}\PYZhy{}\PYZhy{}\PYZhy{}\PYZhy{}\PYZhy{}\PYZhy{}\PYZhy{}\PYZhy{}\PYZhy{}}
+\PY{c+c1}{\PYZsh{} Evaluation function}
+\PY{c+c1}{\PYZsh{} \PYZhy{}\PYZhy{}\PYZhy{}\PYZhy{}\PYZhy{}\PYZhy{}\PYZhy{}\PYZhy{}\PYZhy{}\PYZhy{}\PYZhy{}\PYZhy{}\PYZhy{}\PYZhy{}\PYZhy{}\PYZhy{}\PYZhy{}\PYZhy{}\PYZhy{}\PYZhy{}\PYZhy{}\PYZhy{}\PYZhy{}\PYZhy{}\PYZhy{}\PYZhy{}\PYZhy{}\PYZhy{}\PYZhy{}\PYZhy{}\PYZhy{}\PYZhy{}\PYZhy{}\PYZhy{}}
+\PY{k}{def}\PY{+w}{ }\PY{n+nf}{evaluate\PYZus{}model}\PY{p}{(}\PY{n}{model}\PY{p}{,} \PY{n}{X\PYZus{}test}\PY{p}{,} \PY{n}{y\PYZus{}test}\PY{p}{)}\PY{p}{:}
+    \PY{n}{y\PYZus{}pred} \PY{o}{=} \PY{n}{model}\PY{o}{.}\PY{n}{predict}\PY{p}{(}\PY{n}{X\PYZus{}test}\PY{p}{)}
+
+    \PY{k}{return} \PY{p}{\PYZob{}}
+        \PY{l+s+s2}{\PYZdq{}}\PY{l+s+s2}{Accuracy}\PY{l+s+s2}{\PYZdq{}}\PY{p}{:} \PY{n}{accuracy\PYZus{}score}\PY{p}{(}\PY{n}{y\PYZus{}test}\PY{p}{,} \PY{n}{y\PYZus{}pred}\PY{p}{)}\PY{p}{,}
+        \PY{l+s+s2}{\PYZdq{}}\PY{l+s+s2}{Precision}\PY{l+s+s2}{\PYZdq{}}\PY{p}{:} \PY{n}{precision\PYZus{}score}\PY{p}{(}\PY{n}{y\PYZus{}test}\PY{p}{,} \PY{n}{y\PYZus{}pred}\PY{p}{)}\PY{p}{,}
+        \PY{l+s+s2}{\PYZdq{}}\PY{l+s+s2}{Recall}\PY{l+s+s2}{\PYZdq{}}\PY{p}{:} \PY{n}{recall\PYZus{}score}\PY{p}{(}\PY{n}{y\PYZus{}test}\PY{p}{,} \PY{n}{y\PYZus{}pred}\PY{p}{)}\PY{p}{,}
+        \PY{l+s+s2}{\PYZdq{}}\PY{l+s+s2}{F1\PYZhy{}Score}\PY{l+s+s2}{\PYZdq{}}\PY{p}{:} \PY{n}{f1\PYZus{}score}\PY{p}{(}\PY{n}{y\PYZus{}test}\PY{p}{,} \PY{n}{y\PYZus{}pred}\PY{p}{)}
+    \PY{p}{\PYZcb{}}
+
+\PY{c+c1}{\PYZsh{} \PYZhy{}\PYZhy{}\PYZhy{}\PYZhy{}\PYZhy{}\PYZhy{}\PYZhy{}\PYZhy{}\PYZhy{}\PYZhy{}\PYZhy{}\PYZhy{}\PYZhy{}\PYZhy{}\PYZhy{}\PYZhy{}\PYZhy{}\PYZhy{}\PYZhy{}\PYZhy{}\PYZhy{}\PYZhy{}\PYZhy{}\PYZhy{}\PYZhy{}\PYZhy{}\PYZhy{}\PYZhy{}\PYZhy{}\PYZhy{}\PYZhy{}\PYZhy{}\PYZhy{}\PYZhy{}}
+\PY{c+c1}{\PYZsh{} Evaluate all models}
+\PY{c+c1}{\PYZsh{} \PYZhy{}\PYZhy{}\PYZhy{}\PYZhy{}\PYZhy{}\PYZhy{}\PYZhy{}\PYZhy{}\PYZhy{}\PYZhy{}\PYZhy{}\PYZhy{}\PYZhy{}\PYZhy{}\PYZhy{}\PYZhy{}\PYZhy{}\PYZhy{}\PYZhy{}\PYZhy{}\PYZhy{}\PYZhy{}\PYZhy{}\PYZhy{}\PYZhy{}\PYZhy{}\PYZhy{}\PYZhy{}\PYZhy{}\PYZhy{}\PYZhy{}\PYZhy{}\PYZhy{}\PYZhy{}}
+\PY{n}{results} \PY{o}{=} \PY{p}{[}\PY{p}{]}
+
+\PY{n}{results}\PY{o}{.}\PY{n}{append}\PY{p}{(}\PY{p}{\PYZob{}}
+     \PY{l+s+s2}{\PYZdq{}}\PY{l+s+s2}{Model}\PY{l+s+s2}{\PYZdq{}}\PY{p}{:} \PY{l+s+s2}{\PYZdq{}}\PY{l+s+s2}{Logistic Regression}\PY{l+s+s2}{\PYZdq{}}\PY{p}{,}
+     \PY{o}{*}\PY{o}{*}\PY{n}{evaluate\PYZus{}model}\PY{p}{(}\PY{n}{best\PYZus{}lr}\PY{p}{,} \PY{n}{X\PYZus{}test}\PY{p}{,} \PY{n}{y\PYZus{}test}\PY{p}{)}
+ \PY{p}{\PYZcb{}}\PY{p}{)}
+
+\PY{n}{results}\PY{o}{.}\PY{n}{append}\PY{p}{(}\PY{p}{\PYZob{}}
+    \PY{l+s+s2}{\PYZdq{}}\PY{l+s+s2}{Model}\PY{l+s+s2}{\PYZdq{}}\PY{p}{:} \PY{l+s+s2}{\PYZdq{}}\PY{l+s+s2}{XGBoost}\PY{l+s+s2}{\PYZdq{}}\PY{p}{,}
+    \PY{o}{*}\PY{o}{*}\PY{n}{evaluate\PYZus{}model}\PY{p}{(}\PY{n}{best\PYZus{}xgb}\PY{p}{,} \PY{n}{X\PYZus{}test}\PY{p}{,} \PY{n}{y\PYZus{}test}\PY{p}{)}
+\PY{p}{\PYZcb{}}\PY{p}{)}
+
+\PY{n}{results}\PY{o}{.}\PY{n}{append}\PY{p}{(}\PY{p}{\PYZob{}}
+    \PY{l+s+s2}{\PYZdq{}}\PY{l+s+s2}{Model}\PY{l+s+s2}{\PYZdq{}}\PY{p}{:} \PY{l+s+s2}{\PYZdq{}}\PY{l+s+s2}{Random Forest}\PY{l+s+s2}{\PYZdq{}}\PY{p}{,}
+    \PY{o}{*}\PY{o}{*}\PY{n}{evaluate\PYZus{}model}\PY{p}{(}\PY{n}{best\PYZus{}rf}\PY{p}{,} \PY{n}{X\PYZus{}test}\PY{p}{,} \PY{n}{y\PYZus{}test}\PY{p}{)}
+\PY{p}{\PYZcb{}}\PY{p}{)}
+
+\PY{n}{results\PYZus{}df} \PY{o}{=} \PY{n}{pd}\PY{o}{.}\PY{n}{DataFrame}\PY{p}{(}\PY{n}{results}\PY{p}{)}
+\PY{n}{results\PYZus{}df}
+\end{Verbatim}
+\end{tcolorbox}
+
+            \begin{tcolorbox}[breakable, size=fbox, boxrule=.5pt, pad at break*=1mm, opacityfill=0]
+\prompt{Out}{outcolor}{26}{\boxspacing}
+\begin{Verbatim}[commandchars=\\\{\}]
+                 Model  Accuracy  Precision    Recall  F1-Score
+0  Logistic Regression  0.835443   0.976190  0.773585  0.863158
+1              XGBoost  0.898734   0.959184  0.886792  0.921569
+2        Random Forest  0.924051   0.960784  0.924528  0.942308
+\end{Verbatim}
+\end{tcolorbox}
+        
+    \begin{tcolorbox}[breakable, size=fbox, boxrule=1pt, pad at break*=1mm,colback=cellbackground, colframe=cellborder]
+\prompt{In}{incolor}{27}{\boxspacing}
+\begin{Verbatim}[commandchars=\\\{\}]
+\PY{n}{results\PYZus{}df}\PY{o}{.}\PY{n}{to\PYZus{}csv}\PY{p}{(}\PY{l+s+s2}{\PYZdq{}}\PY{l+s+s2}{model\PYZus{}accuracy\PYZus{}comparison.csv}\PY{l+s+s2}{\PYZdq{}}\PY{p}{,} \PY{n}{index}\PY{o}{=}\PY{k+kc}{True}\PY{p}{)}
+\end{Verbatim}
+\end{tcolorbox}
+
+    \section{Human-in-the-Loop (HITL)
+Validation}\label{human-in-the-loop-hitl-validation}
+
+\subsection{Human-in-the-Loop validation integrates expert human
+judgment into model evaluation and decision-making to improve
+reliability, trust, and
+accountability.}\label{human-in-the-loop-validation-integrates-expert-human-judgment-into-model-evaluation-and-decision-making-to-improve-reliability-trust-and-accountability.}
+
+    \begin{tcolorbox}[breakable, size=fbox, boxrule=1pt, pad at break*=1mm,colback=cellbackground, colframe=cellborder]
+\prompt{In}{incolor}{28}{\boxspacing}
+\begin{Verbatim}[commandchars=\\\{\}]
+\PY{c+c1}{\PYZsh{} HITL review dataset}
+
+\PY{n}{hitl\PYZus{}df} \PY{o}{=} \PY{n}{X\PYZus{}test}\PY{o}{.}\PY{n}{copy}\PY{p}{(}\PY{p}{)}
+\PY{n}{hitl\PYZus{}df}\PY{p}{[}\PY{l+s+s1}{\PYZsq{}}\PY{l+s+s1}{Actual}\PY{l+s+s1}{\PYZsq{}}\PY{p}{]} \PY{o}{=} \PY{n}{y\PYZus{}test}\PY{o}{.}\PY{n}{values}
+\PY{n}{hitl\PYZus{}df}\PY{p}{[}\PY{l+s+s1}{\PYZsq{}}\PY{l+s+s1}{Prediction}\PY{l+s+s1}{\PYZsq{}}\PY{p}{]} \PY{o}{=} \PY{n}{best\PYZus{}xgb}\PY{o}{.}\PY{n}{predict}\PY{p}{(}\PY{n}{X\PYZus{}test}\PY{p}{)}
+\PY{n}{hitl\PYZus{}df}\PY{p}{[}\PY{l+s+s1}{\PYZsq{}}\PY{l+s+s1}{Prediction\PYZus{}Probability}\PY{l+s+s1}{\PYZsq{}}\PY{p}{]} \PY{o}{=} \PY{n}{best\PYZus{}xgb}\PY{o}{.}\PY{n}{predict\PYZus{}proba}\PY{p}{(}\PY{n}{X\PYZus{}test}\PY{p}{)}\PY{p}{[}\PY{p}{:}\PY{p}{,} \PY{l+m+mi}{1}\PY{p}{]}
+
+\PY{n}{hitl\PYZus{}df}\PY{o}{.}\PY{n}{head}\PY{p}{(}\PY{l+m+mi}{10}\PY{p}{)}
+\end{Verbatim}
+\end{tcolorbox}
+
+            \begin{tcolorbox}[breakable, size=fbox, boxrule=.5pt, pad at break*=1mm, opacityfill=0]
+\prompt{Out}{outcolor}{28}{\boxspacing}
+\begin{Verbatim}[commandchars=\\\{\}]
+          age  Medu  Fedu  failures  absences        G1        G2  school\_MS  \textbackslash{}
+305  1.023046     2     4         1  0.286645  0.932473  0.342338      False
+225  1.023046     3     1         1  1.287526 -0.575827 -0.722415      False
+237 -0.546287     2     1         0  1.787966  0.630813  0.342338      False
+318  0.238380     3     4         0 -0.714236  0.027493  0.076150      False
+182  0.238380     2     4         0 -0.714236  1.535793  1.673279      False
+94  -1.330954     2     2         0  0.036424  0.027493  0.608526      False
+34  -0.546287     3     2         0 -0.714236  0.329153  0.874715      False
+307  1.807713     4     4         1  4.039948 -0.877487 -0.456226      False
+33  -1.330954     3     3         0 -0.714236 -0.877487 -0.190038      False
+36  -1.330954     4     3         0 -0.464016  1.234133  1.407091      False
+
+     sex\_M  address\_U  famsize\_LE3  Pstatus\_T  Actual  Prediction  \textbackslash{}
+305  False       True        False       True       1           1
+225  False      False        False       True       0           0
+237  False       True        False       True       1           1
+318  False      False        False       True       1           1
+182  False       True        False       True       1           1
+94    True       True         True       True       1           1
+34    True       True        False       True       1           1
+307   True       True        False       True       0           0
+33    True       True         True       True       1           1
+36    True       True         True       True       1           1
+
+     Prediction\_Probability
+305                0.998737
+225                0.081923
+237                0.997885
+318                0.993551
+182                0.995929
+94                 0.998112
+34                 0.997302
+307                0.071525
+33                 0.537797
+36                 0.997450
+\end{Verbatim}
+\end{tcolorbox}
+        
+    \begin{tcolorbox}[breakable, size=fbox, boxrule=1pt, pad at break*=1mm,colback=cellbackground, colframe=cellborder]
+\prompt{In}{incolor}{29}{\boxspacing}
+\begin{Verbatim}[commandchars=\\\{\}]
+\PY{c+c1}{\PYZsh{} SHAP explanation magnitude (importance score)}
+
+\PY{n}{shap\PYZus{}importance} \PY{o}{=} \PY{n}{np}\PY{o}{.}\PY{n}{abs}\PY{p}{(}\PY{n}{shap\PYZus{}values\PYZus{}xgb}\PY{p}{)}\PY{o}{.}\PY{n}{mean}\PY{p}{(}\PY{n}{axis}\PY{o}{=}\PY{l+m+mi}{1}\PY{p}{)}
+
+\PY{n}{hitl\PYZus{}df}\PY{p}{[}\PY{l+s+s1}{\PYZsq{}}\PY{l+s+s1}{SHAP\PYZus{}Confidence}\PY{l+s+s1}{\PYZsq{}}\PY{p}{]} \PY{o}{=} \PY{n}{shap\PYZus{}importance}
+\PY{n}{hitl\PYZus{}df}\PY{o}{.}\PY{n}{head}\PY{p}{(}\PY{l+m+mi}{10}\PY{p}{)}
+\end{Verbatim}
+\end{tcolorbox}
+
+            \begin{tcolorbox}[breakable, size=fbox, boxrule=.5pt, pad at break*=1mm, opacityfill=0]
+\prompt{Out}{outcolor}{29}{\boxspacing}
+\begin{Verbatim}[commandchars=\\\{\}]
+          age  Medu  Fedu  failures  absences        G1        G2  school\_MS  \textbackslash{}
+305  1.023046     2     4         1  0.286645  0.932473  0.342338      False
+225  1.023046     3     1         1  1.287526 -0.575827 -0.722415      False
+237 -0.546287     2     1         0  1.787966  0.630813  0.342338      False
+318  0.238380     3     4         0 -0.714236  0.027493  0.076150      False
+182  0.238380     2     4         0 -0.714236  1.535793  1.673279      False
+94  -1.330954     2     2         0  0.036424  0.027493  0.608526      False
+34  -0.546287     3     2         0 -0.714236  0.329153  0.874715      False
+307  1.807713     4     4         1  4.039948 -0.877487 -0.456226      False
+33  -1.330954     3     3         0 -0.714236 -0.877487 -0.190038      False
+36  -1.330954     4     3         0 -0.464016  1.234133  1.407091      False
+
+     sex\_M  address\_U  famsize\_LE3  Pstatus\_T  Actual  Prediction  \textbackslash{}
+305  False       True        False       True       1           1
+225  False      False        False       True       0           0
+237  False       True        False       True       1           1
+318  False      False        False       True       1           1
+182  False       True        False       True       1           1
+94    True       True         True       True       1           1
+34    True       True        False       True       1           1
+307   True       True        False       True       0           0
+33    True       True         True       True       1           1
+36    True       True         True       True       1           1
+
+     Prediction\_Probability  SHAP\_Confidence
+305                0.998737         0.672969
+225                0.081923         0.481022
+237                0.997885         0.576348
+318                0.993551         0.659916
+182                0.995929         0.704347
+94                 0.998112         0.642689
+34                 0.997302         0.623772
+307                0.071525         0.337468
+33                 0.537797         0.508181
+36                 0.997450         0.668780
+\end{Verbatim}
+\end{tcolorbox}
+        
+    Human-in-the-Loop validation was incorporated by allowing expert review
+of model predictions alongside SHAP-based explanations, ensuring
+accountability and reducing blind reliance on automated decisions
+
+    \section{Fairness \& Bias Analysis}\label{fairness-bias-analysis}
+
+    \begin{tcolorbox}[breakable, size=fbox, boxrule=1pt, pad at break*=1mm,colback=cellbackground, colframe=cellborder]
+\prompt{In}{incolor}{30}{\boxspacing}
+\begin{Verbatim}[commandchars=\\\{\}]
+\PY{c+c1}{\PYZsh{} Fairness analysis by gender (drop\PYZus{}first=True compatible)}
+
+\PY{n}{fairness\PYZus{}df} \PY{o}{=} \PY{n}{X\PYZus{}test}\PY{o}{.}\PY{n}{copy}\PY{p}{(}\PY{p}{)}
+\PY{n}{fairness\PYZus{}df}\PY{p}{[}\PY{l+s+s1}{\PYZsq{}}\PY{l+s+s1}{Actual}\PY{l+s+s1}{\PYZsq{}}\PY{p}{]} \PY{o}{=} \PY{n}{y\PYZus{}test}\PY{o}{.}\PY{n}{values}
+\PY{n}{fairness\PYZus{}df}\PY{p}{[}\PY{l+s+s1}{\PYZsq{}}\PY{l+s+s1}{Prediction}\PY{l+s+s1}{\PYZsq{}}\PY{p}{]} \PY{o}{=} \PY{n}{best\PYZus{}xgb}\PY{o}{.}\PY{n}{predict}\PY{p}{(}\PY{n}{X\PYZus{}test}\PY{p}{)}
+
+\PY{c+c1}{\PYZsh{} sex\PYZus{}M = 1 → Male, sex\PYZus{}M = 0 → Female}
+\PY{n}{fairness\PYZus{}df}\PY{p}{[}\PY{l+s+s1}{\PYZsq{}}\PY{l+s+s1}{Gender}\PY{l+s+s1}{\PYZsq{}}\PY{p}{]} \PY{o}{=} \PY{n}{fairness\PYZus{}df}\PY{p}{[}\PY{l+s+s1}{\PYZsq{}}\PY{l+s+s1}{sex\PYZus{}M}\PY{l+s+s1}{\PYZsq{}}\PY{p}{]}\PY{o}{.}\PY{n}{apply}\PY{p}{(}
+    \PY{k}{lambda} \PY{n}{x}\PY{p}{:} \PY{l+s+s1}{\PYZsq{}}\PY{l+s+s1}{Male}\PY{l+s+s1}{\PYZsq{}} \PY{k}{if} \PY{n}{x} \PY{o}{==} \PY{l+m+mi}{1} \PY{k}{else} \PY{l+s+s1}{\PYZsq{}}\PY{l+s+s1}{Female}\PY{l+s+s1}{\PYZsq{}}
+\PY{p}{)}
+
+\PY{n}{fairness\PYZus{}accuracy} \PY{o}{=} \PY{n}{fairness\PYZus{}df}\PY{o}{.}\PY{n}{groupby}\PY{p}{(}\PY{l+s+s1}{\PYZsq{}}\PY{l+s+s1}{Gender}\PY{l+s+s1}{\PYZsq{}}\PY{p}{)}\PY{o}{.}\PY{n}{apply}\PY{p}{(}
+    \PY{k}{lambda} \PY{n}{x}\PY{p}{:} \PY{p}{(}\PY{n}{x}\PY{p}{[}\PY{l+s+s1}{\PYZsq{}}\PY{l+s+s1}{Actual}\PY{l+s+s1}{\PYZsq{}}\PY{p}{]} \PY{o}{==} \PY{n}{x}\PY{p}{[}\PY{l+s+s1}{\PYZsq{}}\PY{l+s+s1}{Prediction}\PY{l+s+s1}{\PYZsq{}}\PY{p}{]}\PY{p}{)}\PY{o}{.}\PY{n}{mean}\PY{p}{(}\PY{p}{)}
+\PY{p}{)}
+
+\PY{n}{fairness\PYZus{}accuracy}
+\end{Verbatim}
+\end{tcolorbox}
+
+            \begin{tcolorbox}[breakable, size=fbox, boxrule=.5pt, pad at break*=1mm, opacityfill=0]
+\prompt{Out}{outcolor}{30}{\boxspacing}
+\begin{Verbatim}[commandchars=\\\{\}]
+Gender
+Female    0.93617
+Male      0.84375
+dtype: float64
+\end{Verbatim}
+\end{tcolorbox}
+        
+    \begin{tcolorbox}[breakable, size=fbox, boxrule=1pt, pad at break*=1mm,colback=cellbackground, colframe=cellborder]
+\prompt{In}{incolor}{31}{\boxspacing}
+\begin{Verbatim}[commandchars=\\\{\}]
+\PY{k+kn}{from}\PY{+w}{ }\PY{n+nn}{sklearn}\PY{n+nn}{.}\PY{n+nn}{metrics}\PY{+w}{ }\PY{k+kn}{import} \PY{n}{f1\PYZus{}score}
+
+\PY{n}{fairness\PYZus{}f1} \PY{o}{=} \PY{n}{fairness\PYZus{}df}\PY{o}{.}\PY{n}{groupby}\PY{p}{(}\PY{l+s+s1}{\PYZsq{}}\PY{l+s+s1}{Gender}\PY{l+s+s1}{\PYZsq{}}\PY{p}{)}\PY{o}{.}\PY{n}{apply}\PY{p}{(}
+    \PY{k}{lambda} \PY{n}{x}\PY{p}{:} \PY{n}{f1\PYZus{}score}\PY{p}{(}\PY{n}{x}\PY{p}{[}\PY{l+s+s1}{\PYZsq{}}\PY{l+s+s1}{Actual}\PY{l+s+s1}{\PYZsq{}}\PY{p}{]}\PY{p}{,} \PY{n}{x}\PY{p}{[}\PY{l+s+s1}{\PYZsq{}}\PY{l+s+s1}{Prediction}\PY{l+s+s1}{\PYZsq{}}\PY{p}{]}\PY{p}{)}
+\PY{p}{)}
+
+\PY{n}{fairness\PYZus{}f1}
+\end{Verbatim}
+\end{tcolorbox}
+
+            \begin{tcolorbox}[breakable, size=fbox, boxrule=.5pt, pad at break*=1mm, opacityfill=0]
+\prompt{Out}{outcolor}{31}{\boxspacing}
+\begin{Verbatim}[commandchars=\\\{\}]
+Gender
+Female    0.949153
+Male      0.883721
+dtype: float64
+\end{Verbatim}
+\end{tcolorbox}
+        
+    \begin{tcolorbox}[breakable, size=fbox, boxrule=1pt, pad at break*=1mm,colback=cellbackground, colframe=cellborder]
+\prompt{In}{incolor}{32}{\boxspacing}
+\begin{Verbatim}[commandchars=\\\{\}]
+\PY{c+c1}{\PYZsh{} SHAP bias check by gender}
+
+\PY{n}{male\PYZus{}idx} \PY{o}{=} \PY{n}{X\PYZus{}test}\PY{p}{[}\PY{l+s+s1}{\PYZsq{}}\PY{l+s+s1}{sex\PYZus{}M}\PY{l+s+s1}{\PYZsq{}}\PY{p}{]} \PY{o}{==} \PY{l+m+mi}{1}
+\PY{n}{shap}\PY{o}{.}\PY{n}{summary\PYZus{}plot}\PY{p}{(}\PY{n}{shap\PYZus{}values\PYZus{}xgb}\PY{p}{[}\PY{n}{male\PYZus{}idx}\PY{p}{]}\PY{p}{,} \PY{n}{X\PYZus{}test}\PY{p}{[}\PY{n}{male\PYZus{}idx}\PY{p}{]}\PY{p}{,} \PY{n}{show}\PY{o}{=}\PY{k+kc}{False}\PY{p}{)}
+\end{Verbatim}
+\end{tcolorbox}
+
+    \begin{center}
+    \adjustimage{max size={0.9\linewidth}{0.9\paperheight}}{output_39_0.png}
+    \end{center}
+    { \hspace*{\fill} \\}
+    
+    \begin{tcolorbox}[breakable, size=fbox, boxrule=1pt, pad at break*=1mm,colback=cellbackground, colframe=cellborder]
+\prompt{In}{incolor}{33}{\boxspacing}
+\begin{Verbatim}[commandchars=\\\{\}]
+\PY{n}{female\PYZus{}idx} \PY{o}{=} \PY{n}{X\PYZus{}test}\PY{p}{[}\PY{l+s+s1}{\PYZsq{}}\PY{l+s+s1}{sex\PYZus{}M}\PY{l+s+s1}{\PYZsq{}}\PY{p}{]} \PY{o}{==} \PY{l+m+mi}{0}
+\PY{n}{shap}\PY{o}{.}\PY{n}{summary\PYZus{}plot}\PY{p}{(}\PY{n}{shap\PYZus{}values\PYZus{}xgb}\PY{p}{[}\PY{n}{female\PYZus{}idx}\PY{p}{]}\PY{p}{,} \PY{n}{X\PYZus{}test}\PY{p}{[}\PY{n}{female\PYZus{}idx}\PY{p}{]}\PY{p}{,} \PY{n}{show}\PY{o}{=}\PY{k+kc}{False}\PY{p}{)}
+\end{Verbatim}
+\end{tcolorbox}
+
+    \begin{center}
+    \adjustimage{max size={0.9\linewidth}{0.9\paperheight}}{output_40_0.png}
+    \end{center}
+    { \hspace*{\fill} \\}
+    
+    We analyze whether different features dominate predictions across
+demographic groups. Fairness analysis indicates balanced predictive
+behavior across sensitive attributes, with no dominant bias observed in
+performance or feature attribution.
+
+    \begin{tcolorbox}[breakable, size=fbox, boxrule=1pt, pad at break*=1mm,colback=cellbackground, colframe=cellborder]
+\prompt{In}{incolor}{ }{\boxspacing}
+\begin{Verbatim}[commandchars=\\\{\}]
+
+\end{Verbatim}
+\end{tcolorbox}
+
+
+    % Add a bibliography block to the postdoc
+    
+    
+    
+\end{document}
