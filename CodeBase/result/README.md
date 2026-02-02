@@ -1,9 +1,10 @@
 # Model Performance : 
-## Algorithm		Accuracy		F1 Score
-Logistic Regression	0.9153846153846154	0.9506726457399103
-Random Forest		0.8846153846153846	0.9327354260089686
-XGBoost			0.9			0.9427312775330396
-
+```
+- Algorithm		        Accuracy		        F1 Score
+- Logistic Regression	0.9153846153846154	0.9506726457399103
+- Random Forest	    	0.8846153846153846	0.9327354260089686
+- XGBoost			    0.9		            0.9427312775330396
+```
 # Model Performance [Updated Previous]
 ```
 | Model               | Accuracy (Old) | Accuracy (New) | Precision (Old) | Precision (New) | Recall (Old) | Recall (New) | F1-Score (Old) | F1-Score (New) |
@@ -15,9 +16,10 @@ XGBoost			0.9			0.9427312775330396
 
 # Model Performance [Updated New]
 ```
-| Model               | Accuracy (Old) | Accuracy (New) | Accuracy (Final) | F1-Score (Old) | F1-Score (New) | F1-Score (Final) |
-| ------------------- | -------------- | -------------- | ---------------- | -------------- | -------------- | ---------------- |
-| Logistic Regression | —              | 0.8354         | **0.9154**       | —              | 0.8632         | **0.9507**       |
-| Random Forest       | **0.9241**     | **0.9241**     | 0.8846           | **0.9423**     | **0.9423**     | 0.9327           |
-| XGBoost             | 0.8987         | 0.8987         | **0.9000**       | 0.9216         | 0.9216         | **0.9427**       |
+| Model               | Accuracy (Old)     | Accuracy (New)     | Accuracy (Final)   | F1-Score (Old)     | F1-Score (New)     | F1-Score (Final)   |
+| ------------------- | ------------------ | ------------------ | ------------------ | ------------------ | ------------------ | ------------------ |
+| Logistic Regression | —                  | 0.8354430379746836 | 0.9153846153846154 | —                  | 0.8631578947368421 | 0.9506726457399103 |
+| Random Forest       | 0.9240506329113924 | 0.9240506329113924 | 0.8846153846153846 | 0.9423076923076923 | 0.9423076923076923 | 0.9327354260089686 |
+| XGBoost             | 0.8987341772151899 | 0.8987341772151899 | 0.9                | 0.9215686274509803 | 0.9215686274509803 | 0.9427312775330396 |
+
 ```
