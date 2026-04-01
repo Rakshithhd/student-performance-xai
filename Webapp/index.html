@@ -1,0 +1,94 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+  <meta charset="UTF-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1.0">
+  <title>Student Performance Dashboard</title>
+  <style>
+    body {
+      font-family: Arial, sans-serif;
+      margin: 0;
+      background: #f4f6f8;
+      color: #333;
+    }
+    header {
+      background: #4a90e2;
+      color: white;
+      padding: 1rem;
+      text-align: center;
+    }
+    table {
+      width: 90%;
+      margin: 2rem auto;
+      border-collapse: collapse;
+      background: white;
+      box-shadow: 0 2px 6px rgba(0,0,0,0.1);
+    }
+    th, td {
+      padding: 0.8rem;
+      border-bottom: 1px solid #ddd;
+      text-align: center;
+    }
+    th {
+      background: #f0f0f0;
+    }
+    tr:hover {
+      background: #f9f9f9;
+    }
+    .status-pass {
+      color: green;
+      font-weight: bold;
+    }
+    .status-fail {
+      color: red;
+      font-weight: bold;
+    }
+  </style>
+</head>
+<body>
+
+<header>
+  <h1>Student Performance Dashboard</h1>
+</header>
+
+<table>
+  <thead>
+    <tr>
+      <th>Student Name</th>
+      <th>Math</th>
+      <th>Science</th>
+      <th>English</th>
+      <th>Average</th>
+      <th>Status</th>
+    </tr>
+  </thead>
+  <tbody>
+    <tr>
+      <td>Rahim Ahmed</td>
+      <td>85</td>
+      <td>78</td>
+      <td>92</td>
+      <td>85</td>
+      <td class="status-pass">Pass</td>
+    </tr>
+    <tr>
+      <td>Fatima Khan</td>
+      <td>60</td>
+      <td>55</td>
+      <td>58</td>
+      <td>58</td>
+      <td class="status-fail">Fail</td>
+    </tr>
+    <tr>
+      <td>Hasan Ali</td>
+      <td>90</td>
+      <td>88</td>
+      <td>94</td>
+      <td>91</td>
+      <td class="status-pass">Pass</td>
+    </tr>
+  </tbody>
+</table>
+
+</body>
+</html>
