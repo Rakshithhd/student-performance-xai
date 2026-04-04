@@ -1,7 +1,7 @@
 # Student Performance Prediction with Explainable AI & Fairness
 
 Welcome to the central repository for our final year thesis research. This project focuses on predicting student academic performance using Machine Learning and Deep Learning (LSTM, Diffusion Models), while emphasizing model explainability (SHAP, LIME) and fairness.
-
+   
 ## 📂 Repository Navigation
 
 Select a directory below to navigate to the specific workspace:
