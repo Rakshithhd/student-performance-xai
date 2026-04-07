@@ -1,8 +1,8 @@
 # Student Performance Prediction with Explainable AI & Fairness
-
+  
 Welcome to the central repository for our final year thesis research. This project focuses on predicting student academic performance using Machine Learning and Deep Learning (LSTM, Diffusion Models), while emphasizing model explainability (SHAP, LIME) and fairness.
    
-## 📂 Repository Navigation
+## 📂 Repository Navigation: 
 
 Select a directory below to navigate to the specific workspace:
 
@@ -23,7 +23,7 @@ To run the main project code, please follow these steps:
    git clone https://github.com/Istiaq-Alam/Student-Performance-Prediction-with-Explainable-AI.git
    ```
 2. **Navigate to the CodeBase:**
-   ```bash
+   ```bash 
    cd CodeBase
    ```
 3. **Install Dependencies:**
