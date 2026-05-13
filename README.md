@@ -1,77 +1,45 @@
-# Student Performance Prediction with Explainable AI & Fairness
-  
-Welcome to the central repository for our final year thesis research. This project focuses on predicting student academic performance using Machine Learning and Deep Learning (LSTM, Diffusion Models), while emphasizing model explainability (SHAP, LIME) and fairness.
-   
-## 📂 Repository Navigation: 
+Student Performance Prediction with Explainable AI
 
-Select a directory below to navigate to the specific workspace:
+An intelligent Human-Centered AI (HCAI) system that predicts student academic performance using Machine Learning while providing transparent and explainable insights through Explainable AI (XAI) techniques.
 
-| Directory | Description | Status |
-| :--- | :--- | :--- |
-| [**💻 CodeBase**](./CodeBase) | **The Main Project.** Contains the cleaned, production-ready code, datasets, and final models used for the thesis results. | 🟢 Active |
-| [**📚 Literature & Sandbox**](./Literature) | **Research Hub.** Contains literature reviews, PDF papers, and **individual contributor workspaces** (Istiaq, Maria, Nazme) for experiments. | 🟡 Ongoing |
-| [**Thesis Paper**](./Thesis_Paper) | **The Manuscript.** Contains the LaTeX files, images, and bibliography for the final research paper. | 🔴 Draft |
+Project Overview
 
----
+This project predicts student performance based on academic and behavioral factors such as:
 
-## 🚀 Getting Started (Main Codebase)
+Attendance
+Assignment scores
+Quiz performance
+Presentation scores
+Midterm marks
 
-To run the main project code, please follow these steps:
+The system not only predicts student outcomes but also explains the reasoning behind the prediction using Explainable AI techniques, making the model more transparent, trustworthy, and human-centered.
 
-1. **Clone the repository:**
-   ```bash
-   git clone https://github.com/Istiaq-Alam/Student-Performance-Prediction-with-Explainable-AI.git
-   ```
-2. **Navigate to the CodeBase:**
-   ```bash 
-   cd CodeBase
-   ```
-3. **Install Dependencies:**
-   ```bash
-   pip install -r requirements.txt
-   ```
-4. **Run the Analysis:**
-   - Open `src/student_performance_prediction.ipynb` to view the primary prediction pipeline.
-   - Check `result/` for generated performance metrics.
+Features
+Student performance prediction using Machine Learning
+Explainable AI integration using SHAP and LIME
+Human-Centered AI (HCAI) principles
+Interactive web interface
+Visual explanation dashboard
+Personalized academic improvement suggestions
+Fairness-aware AI analysis
+Technologies Used
+Python
+Pandas
+NumPy
+Scikit-learn
+XGBoost
+SHAP
+LIME
+Streamlit / Flask
+HTML
+CSS
+JavaScript
+Human-Centered AI (HCAI) Integration
 
---- 
+This project follows Human-Centered AI principles by:
 
-## 🏗️ Project Structure Overview
-1. `CodeBase`
-This is the "Clean Room." Only finalized code goes here.
-- `data/`: Raw datasets (student-mat.csv, student-por.csv).
-- `src/`: Source code, notebooks, and main scripts.
-- `result/`: Model performance CSVs and outputs.
-
-2. `Literature` (Collaborator Workspaces)
-This is the "Sandbox."
-- `Papers/`: Shared collection of research papers we are studying (e.g., Evaluating the Explainers, Fairness in Student Prediction).
-- Individual Workspaces:
-  - 👤 [Istiaq](https://github.com/Istiaq-Alam): Working on LSTM models, XAI methods (SHAP, LIME, DICE), and `fairsynedu`.
-  - 👤 [Nazme](https://github.com/Nazme10): Literature review and initial drafts.
-  - 👤 [Maria](https://github.com/mariafardus): Summaries of academic performance prediction papers.
-
-3. `Thesis_Paper`
-Contains the academic output.
-- LaTeX source files.
-- High-resolution figures generated from the CodeBase.
-
----
-
-## 🛠️ Key Technologies & Methods
-- Models: LSTM, Bi-LSTM, Diffusion Models.
-- Explainability (XAI): SHAP, LIME, DICE, CEM (Counterfactual Explanations).
-- Fairness: Bias detection in educational data (fairsynedu).
-- Data: Student Performance Data Set (Cortez and Silva, 2008).
-
----
-
-## 🤝 Contributors
-- [Istiaq](https://github.com/Istiaq-Alam) - Model Development & XAI Implementation
-- [Nazme](https://github.com/Nazme10) - Literature Review & Documentation
-- [Maria](https://github.com/mariafardus) - Research Analysis & Summarization
-
----
-   
-## 📝 License
-This project is for academic research purposes.
+Making AI predictions transparent and explainable
+Supporting human decision-making instead of replacing it
+Improving trust in AI systems
+Providing understandable insights for students and educators
+Encouraging ethical and fair AI practices
